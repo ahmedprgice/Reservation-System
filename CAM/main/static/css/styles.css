@@ -1,0 +1,53 @@
+/* Resetting default margin for body */
+body {
+    margin: 0;
+    font-family: 'Roboto Thin', Arial, sans-serif; /* Change 'Roboto Thin' to your preferred thin font */
+}
+
+/* Header Styles */
+header {
+    background-color: #363538;
+    color: #F6F6F6;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 20px;
+   
+}
+
+header h1 {
+    margin: 0;
+    padding: 0;
+    font-size: 32px;
+    font-weight: normal; /* Ensure font weight is set to normal for thin font */
+}
+
+/* Navigation Styles */
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+nav ul li a {
+    color: #8D8C8A;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+nav ul li a:hover {
+    color: #408697;
+}
+
+/* Footer Styles */
+footer {
+    background-color: #52D6F4;
+    color: #363538;
+    text-align: center;
+    padding: 10px 0;
+}

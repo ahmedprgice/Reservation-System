@@ -3,7 +3,13 @@ from django.http import HttpResponse
 # Create your views here.
 
 def index(response):
-    return HttpResponse("Hello, world. You're at the polls index.")
+    return render(response, "main/base.html", {})
 
-def v1(response):
-    return HttpResponse("<h1>Version 1</h1>")
+def home(response):
+    return render(response, "main/home.html", {})
+
+def facilities(response):
+    return render(response, "main/facilities.html", {})
+
+def reservations(response):
+    return render(response, "main/reservations.html", {})
