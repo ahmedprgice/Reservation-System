@@ -20,6 +20,16 @@
         </ul>
     </nav>
     <main>
+        {% if user.is_authenticated %}
+            <p>Welcome, {{user.username}}! 
+                <form action="{% url 'logout' %}" method="post">
+                {% csrf_token %}
+                <button type="submit">Logout</button>
+            </form>
+            </p>
+        {% else %}
+            <p><a href="/login">Login</a> | <a href="/register">Register</a></p>
+        {% endif %}
         {% block content %}
         {% endblock %}
     </main>
