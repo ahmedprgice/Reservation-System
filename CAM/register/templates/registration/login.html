@@ -1,16 +1,29 @@
 {% extends "main/base.html" %}
+{% load static %}
 
 {% block title %}
 Login Here
 {% endblock%}
 
-{% load crispy_forms_tags %}
+
 
 {% block content %}
-<form method="POST" class="form-group">
-    {% csrf_token %}
-    {{form|crispy}}
-    <p>Don't have an account? Create one <a href="/register">here</a></p>
-    <button type="submit" class="btn btn-success">Login</button>
-</form>
+<link rel="stylesheet" type="text/css" href="{% static 'css/formstyles.css' %}">
+<!-- Main content area -->
+<div class="content-wrapper">
+    <!-- New section for background image -->
+    <section class="background-section">
+        <div class="content">
+          <form style="text-align: center;" method="POST" class="form-group">
+        {% csrf_token %}
+        {{form}}
+        <p>Don't have an account? Create one <a href="/register">here</a></p>
+        <button type="submit" class="btn">Login</button>
+        </form>  
+        </div>
+    </section>   
+</div>
+
+
+
 {% endblock %}

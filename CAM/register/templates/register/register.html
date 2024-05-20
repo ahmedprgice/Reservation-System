@@ -1,12 +1,19 @@
 {% extends "main/base.html" %}
 
 {% block title %}Create an Account {% endblock %}
-{% load crispy_forms_tags %}
+{% load static %}
 
 {% block content %}
- <form method="POST" class="form-group">
+<link rel="stylesheet" type="text/css" href="{% static 'css/formstyles.css' %}">
+<div class="content-wrapper">
+   <section class="background-section">
+      <div class="content">
+ <form style="text-align: center;" method="POST" class="form-group">
     {% csrf_token %}
-    {{form|crispy}}
-    <button type="submit" class="btn btn-success">Register</button>
- </form>
+    {{form}}
+    <button type="submit" class="btn">Register</button>
+      </form>
+      </div>
+   </section>
+</div>
 {% endblock %}

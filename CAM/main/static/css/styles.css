@@ -1,53 +1,126 @@
-/* Resetting default margin for body */
 body {
+    font-family: "Barlow Semi Condensed", sans-serif;
+    font-style: normal;
     margin: 0;
-    font-family: 'Roboto Thin', Arial, sans-serif; /* Change 'Roboto Thin' to your preferred thin font */
+    padding: 0;
+    background-color: #363538;
+    color: #F6F6F6;
 }
 
-/* Header Styles */
 header {
-    background-color: #363538;
     color: #F6F6F6;
     padding: 20px;
     text-align: center;
     margin-bottom: 20px;
-   
 }
 
 header h1 {
     margin: 0;
     padding: 0;
     font-size: 32px;
-    font-weight: normal; /* Ensure font weight is set to normal for thin font */
+    font-weight: 100;
 }
 
+
 /* Navigation Styles */
+
 nav ul {
     list-style-type: none;
     margin: 0;
-    padding: 0;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 50px;
 }
 
 nav ul li {
-    display: inline;
     margin-right: 20px;
+}
+
+nav ul li form {
+    display: inline;
 }
 
 nav ul li a {
     color: #8D8C8A;
     text-decoration: none;
-    font-size: 18px;
+    text-transform: uppercase;
+    font-size: 20px;
 }
 
-nav ul li a:hover {
+nav ul li a:hover{
     color: #408697;
+    font-weight: bold;
 }
 
+nav ul li a.active{
+    color: #408697;
+    font-weight: bold;
+    text-decoration: underline;
+}
 /* Footer Styles */
 footer {
     background-color: #52D6F4;
     color: #363538;
     text-align: center;
     padding: 10px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+nav ul li form button{
+    background-color:#363538;
+    text-align: center;
+    border-style: none;
+    border-width: 0;
+    text-transform: uppercase;
+    color: #8D8C8A;
+    font-size: 20px;
+    font-family: "Barlow Semi Condensed", sans-serif;
+    margin-left: 10px;
+    /* text-decoration: none; */
+}
+
+button:hover{
+    color: #408697;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.background-section{
+    
+    background-size: cover;
+    background-position: center;
+    padding-top: 20px;
+    width: 100%;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.background-section .content {
+    background: rgba(0, 0, 0, 0.5); /* Optional: Add a background color with opacity for better text visibility */
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.background-section .content h1 {
+    font-size: 32px;
+    font-weight: 100;
+    margin: 10px;
+    padding: 10px;
+}
+
+.background-section .content p {
+    font-size: 20px;
+    margin: 10px;
+    padding: 10px;
+}
+
+.content-wrapper {
+    flex: 1;
+    padding-top: 60px;
 }

@@ -13,3 +13,6 @@ def facilities(response):
 
 def reservations(response):
     return render(response, "main/reservations.html", {})
+
+def profile(response):
+    return render(response, "main/profile.html", {})
