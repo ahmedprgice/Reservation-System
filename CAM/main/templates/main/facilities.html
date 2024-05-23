@@ -1,17 +1,37 @@
-{%extends 'main/base.html'%}
+{% extends 'main/base.html' %}
+{% load static %}
 
-{%block title%}Facilities{%endblock%}
+{% block title %}Reservations{% endblock %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-{%block content%}
- <!-- Main content area -->
- <div class="content-wrapper">
-    <!-- New section for background image -->
-    <section class="background-section">
-        <div class="content">
-            <!-- Add any content you want to display over the background image -->
-            <h2>Welcome to Facilities</h2>
-            <p>Manage your Facilities with ease.</p>
-        </div>
-    </section>   
+
+    <title>Document</title>
+</head>
+<body>
+    
+{% block content %}
+<!-- Main content area -->
+       <div class="content">
+           <!-- Add any content you want to display over the background image -->
+           <h2>Welcome to Reservations Manager</h2>
+           <p>Manage your Reservations with ease.</p>
+       </div>
+<div class="content-wrapper">
+   <!-- New section for background image -->
+   <section class="background-section">
+
+       <div class="image-container">
+           <img src="{% static 'imgs/class2.png' %}" alt="Class 2">
+           <img src="{% static 'imgs/class1.png' %}" alt="Class 1">
+       </div>
+   </section>   
 </div>
-{%endblock%}
+{% endblock %}
+
+
+</body>
+</html>
+
