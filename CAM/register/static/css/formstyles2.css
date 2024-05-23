@@ -1,0 +1,135 @@
+
+
+form .labelnInput{
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+    width: 100%;
+    gap:10px;
+    
+}
+form label{
+    color: #F6F6F6;
+    grid-column: span 2 / span 2;
+    font-size: 20px;
+    font-family: "Barlow Semi Condensed", sans-serif;
+    text-transform: uppercase;
+    margin-top: 10px;
+    margin-right: -100px;
+    display: flex;
+    justify-content: right;
+    width: 100%;
+
+
+}
+
+form .input-wrapper {
+    position: relative;
+    grid-column: span 4 / span 4;
+    display: flex;
+    align-items: center;
+    
+    width: 80%;
+}
+
+form .input-wrapper input {
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #363538;
+    font-family: "Barlow Semi Condensed", sans-serif;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+form .helptext{
+    display: none;
+    color: #F6F6F6;
+    font-size: 15px;
+    font-family: "Barlow Semi Condensed", sans-serif;
+    margin-top: 10px;
+    padding-left: 200px;
+}
+
+form .input-wrapper .help-button {
+    position: absolute;
+    right: 5px;
+    background: #363538 ;
+    border: solid 0.5px #408697;
+    border-radius: 5px;
+    color: #F6F6F6;
+    font-size: 20px;
+    cursor: pointer;
+    font-family: "Barlow Semi Condensed", sans-serif;
+}
+
+form .help-button:hover{
+    background-color: #408697;
+    color: #363538;
+}
+
+form button.btn{
+    background-color:#408697;
+    text-align: center;
+    border-style: none;
+    border-width: 0;
+    text-transform: uppercase;
+    color: #F6F6F6;
+    font-size: 20px;
+    font-family: "Barlow Semi Condensed", sans-serif;
+    margin-left: 10px;
+    margin-top: 20px;
+    /* text-decoration: none; */
+}
+
+button.btn:hover{
+
+    color: #363538;
+    font-weight: bold;
+    background-color: #52D6F4;
+}
+
+form p{
+    color: #F6F6F6;
+    font-size: 20px;
+    font-family: "Barlow Semi Condensed", sans-serif;
+    margin-top: 20px;
+}
+
+form p a{
+    color: #52D6F4;
+    text-decoration: none;
+}
+
+form li{
+    list-style-type: none;
+    margin-top: 10px;
+    font-family: 'Barlow Semi Condensed', sans-serif;
+}
+
+/* 
+.background-section .content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    width: 50%;
+} */
+
+.content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    width: 50%;
+}
+
+.form-group{
+    width: 100%;
+    justify-content: center;
+}
+

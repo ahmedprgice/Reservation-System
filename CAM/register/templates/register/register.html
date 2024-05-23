@@ -3,17 +3,69 @@
 {% block title %}Create an Account {% endblock %}
 {% load static %}
 
+
+
 {% block content %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/formstyles.css' %}">
+<script>
+   function toggleHelpText(id) {
+      console.log("toggleHelpText function called with id:", id);
+      var helpText = document.getElementById(id);
+      if (helpText.style.display === "none" || helpText.style.display === "") {
+         helpText.style.display = "block";
+      } else {
+         helpText.style.display = "none";
+      }
+   }
+</script>
+<link rel="stylesheet" type="text/css" href="{% static 'css/formstyles2.css' %}">
 <div class="content-wrapper">
    <section class="background-section">
       <div class="content">
- <form style="text-align: center;" method="POST" class="form-group">
+ <form  method="POST" class="form-group">
     {% csrf_token %}
-    {{form}}
+    <div class="labelnInput">
+      <label for="id_ID">ID:</label>
+      <div class="input-wrapper">
+      <input type="text" name="ID" required id="id_ID"></div>
+    </div>
+      <div class="labelnInput">
+         <label for="id_username">Username:</label>
+         <div class="input-wrapper">
+         <input type="text" name="username" maxlength="150" autofocus="" required="" aria-describedby="id_username_helptext" id="id_username">
+      <button type="button" class="help-button" onclick="toggleHelpText('id_username_helptext')">?</button></div>
+      </div>
+         <div class="helptext" id="id_username_helptext">Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.</div>
+      <div class="labelnInput">
+         <label for="id_email">Email:</label>
+         <div class="input-wrapper">
+         <input type="email" name="email" maxlength="320" required="" id="id_email"></div>
+      </div>
+      <div class="labelnInput">
+         <label for="id_password1">Password:</label>
+         <div class="input-wrapper">
+         <input type="password" name="password1" autocomplete="new-password" required="" aria-describedby="id_password1_helptext" id="id_password1">
+         <button type="button" class="help-button" onclick="toggleHelpText('id_password1_helptext')">?</button></div>
+      </div>
+         <div class="helptext" id="id_password1_helptext">
+            <ul>
+               <li>Your password can't be too similar to your other personal information.</li>
+               <li>Your password must contain at least 8 characters.</li>
+               <li>Your password can't be a commonly used password.</li>
+               <li>Your password can't be entirely numeric.</li>
+            </ul>
+         </div>
+      <div class="labelnInput">
+         <label for="id_password2">Renter Password:</label>
+         <div class="input-wrapper">
+         <input type="password" name="password2" autocomplete="new-password" required="" aria-describedby="id_password2_helptext" id="id_password2">
+         <button type="button" class="help-button" onclick="toggleHelpText('id_password2_helptext')">?</button></div>
+      </div>
+         <div class="helptext" id="id_password2_helptext">Enter the same password as before, for verification.</div>
     <button type="submit" class="btn">Register</button>
       </form>
       </div>
    </section>
 </div>
 {% endblock %}
+
+

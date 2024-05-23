@@ -30,7 +30,7 @@ nav ul {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-left: 50px;
+    padding-left: 10px;
 }
 
 nav ul li {
@@ -58,12 +58,13 @@ nav ul li a.active{
     font-weight: bold;
     text-decoration: underline;
 }
+
+
 /* Footer Styles */
 footer {
     background-color: #52D6F4;
     color: #363538;
     text-align: center;
-    padding: 10px 0;
     position: fixed;
     bottom: 0;
     width: 100%;
@@ -122,5 +123,6 @@ button:hover{
 
 .content-wrapper {
     flex: 1;
-    padding-top: 60px;
+    padding-top: 40px;
+    padding-bottom: 60px;
 }
