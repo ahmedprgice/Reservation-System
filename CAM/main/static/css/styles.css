@@ -186,18 +186,61 @@ button:hover{
     display: flex;
     margin-top: 10px; /* Add margin between wrappers */
     border-radius: 10px; /* Rounded corners */
-   
+    display: flex; /* Use flexbox */
+    border:2px solid black;
 }
 
-.white-wrapper:hover{
-    transform: scale(1.1);
+
+
+/* Add this CSS to your existing stylesheet */
+
+/* Style for content within white wrappers */
+.white-content {
+    text-align: left; /* Align text to the left */
 }
+
+/* Style for small text */
+.small-text {
+    font-size: 14px; /* Set smaller font size */
+}
+
+/* Style for flex container */
+.flex-container {
+    display: flex; /* Use flexbox */
+    justify-content: space-between; /* Distribute items evenly along the main axis */
+    align-items: center; /* Center items vertically */
+}
+
+h3,p{
+    color: black;
+} 
 
 /* Style for content within white wrappers */
 .white-content {
     text-align: center; /* Center align text */
 }
 
-h3,p{
-    color: black;
-} 
+/* Style for button container */
+.button-container {
+    margin-left: auto;
+    padding-top:25px;
+}
+
+/* Style for edit button */
+.edit-button {
+    background-color: #408697; /* Button background color */
+    color: #fff; /* Button text color */
+    border: none; /* Remove button border */
+    padding: 5px 10px; /* Add padding */
+    border-radius: 5px; /* Rounded corners */
+    cursor: pointer; /* Change cursor to pointer */
+   
+    transition: background-color 0.3s ease; /* Add transition effect */
+}
+
+/* Style for edit button on hover */
+.edit-button:hover {
+    transform: scale(1.1);
+    color:#b1c2c9;
+    background-color: #4d7889; /* Darker background color on hover */
+}
