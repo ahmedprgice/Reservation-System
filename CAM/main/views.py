@@ -8,6 +8,9 @@ def index(response):
 def home(response):
     return render(response, "main/home.html", {})
 
+def profile(response):
+    return render(response, "main/profile.html", {})
+
 def facilities(response):
     return render(response, "main/facilities.html", {})
 

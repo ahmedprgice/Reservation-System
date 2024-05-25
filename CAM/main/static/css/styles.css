@@ -5,6 +5,8 @@ body {
     padding: 0;
     background-color: #363538;
     color: #F6F6F6;
+    position: relative;
+    min-height: 100vh; /* Ensure the body takes up the full viewport height */
 }
 
 header {
@@ -20,7 +22,6 @@ header h1 {
     font-size: 32px;
     font-weight: 100;
 }
-
 
 /* Navigation Styles */
 
@@ -48,15 +49,32 @@ nav ul li a {
     font-size: 20px;
 }
 
-nav ul li a:hover{
+nav ul li a:hover {
     color: #408697;
     font-weight: bold;
 }
 
-nav ul li a.active{
+nav ul li a.active {
     color: #408697;
     font-weight: bold;
     text-decoration: underline;
+}
+
+
+/* Style for centering the 'P' letter */
+.user {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px; /* Adjust the width as needed */
+    height: 40px; /* Adjust the height as needed */
+    background-color: #f0f0f0; /* Optional: Add background color */
+    border-radius: 50%; /* Optional: Make it round */
+}
+
+/* Style for the 'P' letter */
+.centered {
+    font-size: 24px; /* Adjust the font size as needed */
 }
 
 
@@ -70,27 +88,7 @@ footer {
     width: 100%;
 }
 
-nav ul li form button{
-    background-color:#363538;
-    text-align: center;
-    border-style: none;
-    border-width: 0;
-    text-transform: uppercase;
-    color: #8D8C8A;
-    font-size: 20px;
-    font-family: "Barlow Semi Condensed", sans-serif;
-    margin-left: 10px;
-    /* text-decoration: none; */
-}
-
-button:hover{
-    color: #408697;
-    text-decoration: underline;
-    font-weight: bold;
-}
-
-.background-section{
-    
+.background-section {
     background-size: cover;
     background-position: center;
     padding-top: 20px;
@@ -102,7 +100,7 @@ button:hover{
 }
 
 .background-section .content {
-    background: rgba(0, 0, 0, 0.5); /* Optional: Add a background color with opacity for better text visibility */
+    background: rgba(0, 0, 0, 0.5);
     padding: 20px;
     border-radius: 10px;
     text-align: center;
@@ -121,126 +119,89 @@ button:hover{
     padding: 10px;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 .content-wrapper {
     flex: 1;
     padding-top: 40px;
     padding-bottom: 60px;
 }
 
-
-/* reservation.css */
-
-/* Style for the content wrapper */
-.content-wrapper {
-    max-width: 17000px; /* Adjust max-width as needed */
-    margin: 0 auto; /* Center the content horizontally */
-    padding: 20px;
-    width:1300px;
-
-}
-
-/* Style for the background section */
-.background-section {
-    background-color: #f0f0f0; /* Light gray background color */
-    padding: 20px;
-    border-radius: 10px; /* Rounded corners */
-}
-
-/* Style for the content within the background section */
-.content {
-    text-align: center; /* Center align text */
-    margin-bottom: 20px; /* Add some bottom margin */
-}
-
-/* Style for the image container */
-.image-container {
-    text-align: center; /* Center align images */
-}
-
-/* Style for individual images */
-.image-container img {
-    max-width: 725px; /* Set maximum width */
-    height: 350px; /* Maintain aspect ratio */
-    margin-bottom: 10px; /* Add some bottom margin */
-    border: 2px solid #ccc; /* Gray border */
-    border-radius: 5px; /* Rounded corners */
-    transition: transform 0.3s ease;
-    margin:15px;
-}
-
+/* Additional styles 
 .image-container img:hover {
-    transform: scale(1.1); /* Scale up the image on hover */
+    transform: scale(1.1);
 }
 
-
-/* Add this CSS to your existing stylesheet */
-/* Add this CSS to your existing stylesheet */
-
-/* Style for white wrappers */
-.content-wrapper white-wrapper{
-    transition: transform 0.5s ease; /* Slower transition */
-}
 .white-wrapper {
-    background-color: #fff; /* White background color */
+    background-color: #fff;
     padding: 10px;
     display: flex;
-    margin-top: 10px; /* Add margin between wrappers */
-    border-radius: 10px; /* Rounded corners */
-    display: flex; /* Use flexbox */
-    border:2px solid black;
+    margin-top: 10px;
+    border-radius: 10px;
+    border: 2px solid black;
 }
 
-
-
-/* Add this CSS to your existing stylesheet */
-
-/* Style for content within white wrappers */
 .white-content {
-    text-align: left; /* Align text to the left */
+    text-align: left;
 }
 
-/* Style for small text */
 .small-text {
-    font-size: 14px; /* Set smaller font size */
+    font-size: 14px;
 }
 
-/* Style for flex container */
 .flex-container {
-    display: flex; /* Use flexbox */
-    justify-content: space-between; /* Distribute items evenly along the main axis */
-    align-items: center; /* Center items vertically */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-h3,p{
+h3, p {
     color: black;
-} 
-
-/* Style for content within white wrappers */
-.white-content {
-    text-align: center; /* Center align text */
 }
 
-/* Style for button container */
+.white-content {
+    text-align: center;
+}
+
 .button-container {
     margin-left: auto;
-    padding-top:25px;
+    padding-top: 25px;
 }
 
-/* Style for edit button */
 .edit-button {
-    background-color: #408697; /* Button background color */
-    color: #fff; /* Button text color */
-    border: none; /* Remove button border */
-    padding: 5px 10px; /* Add padding */
-    border-radius: 5px; /* Rounded corners */
-    cursor: pointer; /* Change cursor to pointer */
-   
-    transition: background-color 0.3s ease; /* Add transition effect */
+    background-color: #408697;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-/* Style for edit button on hover */
 .edit-button:hover {
     transform: scale(1.1);
-    color:#b1c2c9;
-    background-color: #4d7889; /* Darker background color on hover */
+    color: #b1c2c9;
+    background-color: #4d7889;
 }
+
+li {
+    color: black;
+}
+
+form-group {
+    color: #363538;
+}
+*/

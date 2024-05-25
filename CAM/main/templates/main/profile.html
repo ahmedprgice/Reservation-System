@@ -1,8 +1,8 @@
-{%extends 'main/base.html'%}
+{% extends 'main/base.html' %}
 
-{%block title%}profile{%endblock%}
+{% block title %}Profile{% endblock %}
 
-{%block content%}
+{% block content %}
  <!-- Main content area -->
  <div class="content-wrapper">
     <!-- New section for background image -->
@@ -10,8 +10,42 @@
         <div class="content">
             <!-- Add any content you want to display over the background image -->
             <h2>Welcome to Profile Manager</h2>
-            <p>Manage your Profile with ease.</p>
         </div>
     </section>   
 </div>
-{%endblock%}
+<div class="border-right">
+    <div class="p-3 py-5">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4 class="text-right">Profile Settings</h4>
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-6">
+                        <label class="labels">Name</label>
+                        <input type="text" class="form-control" placeholder="First name">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="labels">Surname</label>
+                        <input type="text" class="form-control" placeholder="Surname">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-12">
+                <label class="labels">Mobile Number</label>
+                <input type="text" class="form-control" style="width: 30%;" placeholder="Enter phone number">
+            </div>
+            <div class="col-md-12">
+                <label class="labels">Email ID</label>
+                <input type="text" class="form-control" style="width: 30%;" placeholder="Enter email id">
+            </div>
+            <div class="mt-5 text-center">
+                <button class="btn btn-primary profile-button" type="button" style="margin-left: 15px;">Save Profile</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

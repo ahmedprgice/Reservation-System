@@ -15,9 +15,14 @@
     <header>
         <h1>CAMPUS ASSET MANAGER</h1>
     </header>
-    
+
     <nav>
         <ul>
+            <li class="user">
+                <a href="{% url 'profile' %}" class="{% if request.path == '/profile/' %}active{% endif %}">
+                    <div class="centered">P</div>
+                </a>
+            </li>
             <li><a href="{% url 'home' %}" class="{% if request.path == '/home/' %}active{% endif %}">Home</a></li>
             <li><a href="{% url 'facilities' %}" class="{% if request.path == '/facilities/' %}active{% endif %}">Facilities</a></li>
             <li><a href="{% url 'reservations' %}" class="{% if request.path == '/reservations/' %}active{% endif %}">Reservations</a></li>
