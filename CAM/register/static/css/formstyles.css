@@ -2,14 +2,22 @@ form {
     justify-content: center;
     align-items: center;
     margin-top: 20px;
-    
+
 }
+
+
+
 
 form label{
     color: #F6F6F6;
     font-size: 20px;
     font-family: "Barlow Semi Condensed", sans-serif;
     text-transform: uppercase;
+    width: 100%;
+    display: inline-block;
+    width: 200px;
+    margin-top: 10px;
+
     /* margin-right: 10px; */
 }
 
@@ -23,6 +31,7 @@ form input{
     font-family: "Barlow Semi Condensed", sans-serif;
     font-weight: bold;
     font-size: 18px;
+    display: inline-block;
 }
 
 form button.btn{

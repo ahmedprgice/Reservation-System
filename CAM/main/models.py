@@ -8,7 +8,7 @@ class Student(AbstractUser ):
     password = models.CharField(max_length=200)
     profile_pic = models.ImageField(upload_to='profile_pics', blank=True)
     is_active = models.BooleanField(default=True)
-    username = models.CharField(max_length=200, unique=True, default=student_id)
+    username = 'student_id'
     
     groups = models.ManyToManyField(
         Group,
@@ -30,7 +30,7 @@ class Student(AbstractUser ):
         verbose_name_plural = 'Students'
 
     def __str__(self):
-        return f"{self.student_id} {self.name} {self.email} {self.password}"
+        return self.name
 
 class Staff(AbstractUser):
     staff_id = models.CharField(max_length=200)
@@ -39,7 +39,7 @@ class Staff(AbstractUser):
     password = models.CharField(max_length=200)
     profile_pic = models.ImageField(upload_to='profile_pics', blank=True)
     is_active = models.BooleanField(default=True)
-    username = models.CharField(max_length=200, unique=True, default=staff_id)
+    username = 'staff_id'
     
     groups = models.ManyToManyField(
         Group,

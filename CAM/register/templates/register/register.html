@@ -3,16 +3,25 @@
 {% block title %}Register{% endblock %}
 {%load static%}
 {% block content %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/formstyles2.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/preform.css' %}">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
 <div class="content-wrapper">
     <section class="background-section">
-        <div class="content">
-            <form method="POST" enctype="multipart/form-data" class="form-group">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit" class="btn">Register</button>
-            </form>
-        </div>
+        <div class="content" style="display:flex;">
+            <div class="selection">
+                <a href="{% url 'register_student' %}" id="icon">
+                        <i  class="fas fa-book-reader" ></i>
+                            <p style="color: #F6F6F6;">Register as student</p>
+                </a>
+            </div>
+            
+  
+            <div class="selection">
+                <a href="{% url 'register_staff' %}" id="icon">
+                        <i class="fas fa-chalkboard-teacher" ></i>
+                        <p style="color: #F6F6F6;">Register as stafff</p>
+                </a>
+            </div>
     </section>
 </div>
 {% endblock %}
