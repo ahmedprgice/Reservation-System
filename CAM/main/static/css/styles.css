@@ -60,23 +60,23 @@ nav ul li a.active {
     text-decoration: underline;
 }
 
-
-/* Style for centering the 'P' letter */
+/*
+/* Style for centering the 'P' letter 
 .user {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 40px; /* Adjust the width as needed */
-    height: 40px; /* Adjust the height as needed */
-    background-color: #f0f0f0; /* Optional: Add background color */
-    border-radius: 50%; /* Optional: Make it round */
+    width: 40px; /* Adjust the width as needed 
+    height: 40px; /* Adjust the height as needed 
+    background-color: #f0f0f0; /* Optional: Add background color 
+    border-radius: 50%; /* Optional: Make it round 
 }
-
-/* Style for the 'P' letter */
+*/
+/* Style for the 'P' letter 
 .centered {
-    font-size: 24px; /* Adjust the font size as needed */
+    font-size: 24px; /* Adjust the font size as needed 
 }
-
+*/
 
 /* Footer Styles */
 footer {
@@ -119,7 +119,18 @@ footer {
     padding: 10px;
 }
 
-
+button {
+    background-color: #363538;
+    color: #8D8C8A;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    text-transform: uppercase;
+}
+button:hover {
+    text-decoration: underline;
+    color: #408697;
+}
 
 
 

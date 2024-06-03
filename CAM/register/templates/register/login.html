@@ -1,16 +1,16 @@
 {% extends "main/base.html" %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Login{% endblock %}
 {%load static%}
 {% block content %}
-<link rel="stylesheet" type="text/css" href="{% static 'css/formstyles2.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/formstyles.css' %}">
 <div class="content-wrapper">
     <section class="background-section">
         <div class="content">
-            <form method="POST" enctype="multipart/form-data" class="form-group">
+            <form method="POST" class="form-group">
                 {% csrf_token %}
                 {{ form.as_p }}
-                <button type="submit" class="btn">Register</button>
+                <button type="submit" class="btn">Login</button>
             </form>
         </div>
     </section>
