@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect
 from .forms import StudentForm, StaffForm, LoginAuthForm
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.decorators import login_required
+from main.models import Student, Staff
 # Create your views here.
 
 def register(response):
@@ -50,3 +51,5 @@ def user_login(response):
         form = LoginAuthForm()
     return render(response, "register/login.html", {"form":form})
     
+
+

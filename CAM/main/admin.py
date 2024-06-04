@@ -3,15 +3,15 @@ from .models import Student, Staff, Reservation, Reviews, Facility, Facaulty
 # Register your models here.
 
 class StudentAdmin(admin.ModelAdmin):
-    list_display = ('student_id', 'name', 'email', 'password')
-    search_fields = ('student_id', 'name', 'email', 'password')
-    list_filter = ('student_id', 'name', 'email', 'password')
+    list_display = ('student_id', 'name', 'email', 'password', 'profile_pic')
+    search_fields = ('student_id', 'name', 'email', 'password' , 'profile_pic')
+    list_filter = ('student_id', 'name', 'email', 'password' , 'profile_pic')
 
 
 class StaffAdmin(admin.ModelAdmin):
-    list_display = ('staff_id', 'name', 'email', 'password')
-    search_fields = ('staff_id', 'name', 'email', 'password')
-    list_filter = ('staff_id', 'name', 'email', 'password')
+    list_display = ('staff_id', 'name', 'email', 'password' , 'profile_pic')
+    search_fields = ('staff_id', 'name', 'email', 'password' , 'profile_pic')
+    list_filter = ('staff_id', 'name', 'email', 'password' , 'profile_pic')
 
 admin.site.register(Student, StudentAdmin)
 admin.site.register(Staff, StaffAdmin)

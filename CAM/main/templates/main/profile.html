@@ -1,52 +1,71 @@
 {% extends 'main/base.html' %}
 
 {% block title %}Profile{% endblock %}
-
+{% load static %}
 {% block content %}
- <!-- Main content area -->
+<script>
+    window.onload = function(){
+    document.getElementById('profile_pic').addEventListener('change', function(e){
+       const reader = new FileReader();
+         reader.onload = function(e){
+              document.querySelector('.profile-pic img').src = e.target.result;
+            }
+            reader.readAsDataURL(this.files[0]);
+    });
+};
+</script>
+<link rel="stylesheet" type="text/css" href="{% static 'css/profile.css' %}">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
+
+
  <div class="content-wrapper">
-    <!-- New section for background image -->
     <section class="background-section">
         <div class="content">
-            <!-- Add any content you want to display over the background image -->
-            <h2>Welcome to Profile Manager</h2>
-            {{student}}
+            <h2>Profile Settings</h2>
+            <form method="POST" class="form-group" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <div class="profile-container">
+                    <div class="profile-pic">
+                        <label for="profile_pic" class="icon-label">
+                            <img src="{% static 'imgs/defaultpic.png' %}" >
+                        </label>
+                        
+                        <input type="file" id="profile_pic" class="file-input">
+                    </div>   
+                </div>
+                {% if user.staff_id %}
+                {{ user_form.staff_id.label_tag }}
+                {{ user_form.staff_id }}
+                {{ user_form.staff_id.errors }}
+                {% elif user.student_id %}
+                
+                {{ user_form.student_id.label_tag }}
+                {{ user_form.student_id }}
+                {{ user_form.student_id.errors }}
+                {% endif %}
+                {{ user_form.name.label_tag }}
+                {{ user_form.name }}
+                {{ user_form.name.errors }}
+                
+                {{ user_form.email.label_tag }}
+                {{ user_form.email }}
+                {{ user_form.email.errors }}
+
+                {% if messages %}
+                <ul class="messages">
+                    {% for messages in messages %}
+                        <li{% if messages.tags %} class="{{ messages.tags }}"{% endif %}>{{ messages }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+
+                    <button type="submit" class="btn">Update</button>
+            </form>
         </div>
     </section>   
 </div>
-<div class="border-right">
-    <div class="p-3 py-5">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <h4 class="text-right">Profile Settings</h4>
-        </div>
-        <div class="row mt-2">
-            <div class="col-md-6">
-                <div class="row">
-                    <div class="col-md-6">
-                        <label class="labels">Name</label>
-                        <input type="text" class="form-control" placeholder="First name">
-                    </div>
-                    <div class="col-md-6">
-                        <label class="labels">Surname</label>
-                        <input type="text" class="form-control" placeholder="Surname">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row mt-3">
-            <div class="col-md-12">
-                <label class="labels">Mobile Number</label>
-                <input type="text" class="form-control" style="width: 30%;" placeholder="Enter phone number">
-            </div>
-            <div class="col-md-12">
-                <label class="labels">Email ID</label>
-                <input type="text" class="form-control" style="width: 30%;" placeholder="Enter email id">
-            </div>
-            <div class="mt-5 text-center">
-                <button class="btn btn-primary profile-button" type="button" style="margin-left: 15px;">Save Profile</button>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 {% endblock %}

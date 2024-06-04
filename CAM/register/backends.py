@@ -11,9 +11,6 @@ class LoginBackend(BaseBackend):
             pass
 
     
-        
-        
-    
         try:
             student = Student.objects.get(student_id=username)
             if student.password == password or student.check_password(password):

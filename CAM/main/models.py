@@ -29,8 +29,8 @@ class Student(AbstractUser ):
         verbose_name = 'Student'
         verbose_name_plural = 'Students'
 
-    def __str__(self):
-        return self.name
+    def is_student(self):
+        return True
 
 class Staff(AbstractUser):
     staff_id = models.CharField(max_length=200)
@@ -60,8 +60,8 @@ class Staff(AbstractUser):
         verbose_name = 'Staff'
         verbose_name_plural = 'Staffs'
 
-    def __str__(self):
-        return self.name
+    def is_staff(self):
+        return True
     
 class Reservation(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)

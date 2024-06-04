@@ -1,6 +1,8 @@
+from typing import Any
 from django import forms
 from main.models import Student, Staff
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, UserChangeForm
+
 
 
 class StudentForm(forms.ModelForm):
@@ -55,6 +57,4 @@ class LoginAuthForm(AuthenticationForm):
     username = forms.CharField(label='Student/Staff ID', max_length=100)
     password = forms.CharField(label='Password',widget=forms.PasswordInput)
     
-
-
 
