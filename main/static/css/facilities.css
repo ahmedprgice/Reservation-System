@@ -1,0 +1,67 @@
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h2 {
+    margin-top: 3cqb;
+    text-align: center;
+}
+
+p {
+    text-align: center;
+}
+
+.one, .two, .three, .four {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    color: black;
+    background-color: white;
+    height: 100px;
+    width: 850px; /* Adjust width as needed */
+    margin-bottom: 10px; /* Adjust spacing between elements */
+    border-radius: 5px;
+}
+
+span {
+    font-family: 'Inter', sans-serif; /* Change font to Inter */
+    font-weight: 600; /* Semi-bold */
+    margin-left: 20px; /* Adjust the left padding */
+}
+
+a{
+    color: black; 
+    
+}
+
+.one, .two, .three {
+    margin-bottom: 70px;
+}
+
+
+.back-button {
+    background-color: #408697; 
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 10px;
+    margin-left: 50px;
+    height: 30px;
+    width: 100px;
+    transition: width 0.3s, height 0.3s;
+}
+
+.back-button:hover {
+    color: white;
+    width: 110px;
+    height: 40px;
+}
+

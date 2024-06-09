@@ -1,0 +1,39 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Reservations{% endblock %}
+{% load static %}
+{% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/facilities.css' %}">
+</head>
+
+<body>
+   
+    <!-- Main content area -->
+    <div class="content">
+        <!-- Add any content you want to display over the background image -->
+        <h2>Welcome to Reservations Manager</h2>
+        <p>Choose a Facility from here</p>
+    </div>
+
+    <div class="container">
+        <div class="one">
+            <a href="{% url 'classes' %}"><span>Classes</span></a>
+        </div>
+        <div class="two">
+            <a href="{% url 'labs' %}"> <span>Labs</span></a>
+        </div>
+        
+        <div class="three">
+            <a href="{%url 'sportfacilites' %}"><span>Sport Facilities</span></a>
+        </div>
+
+        <div class="four">
+            <a href="{% url 'privaterooms' %}"> <span>Private Study Rooms</span></a>
+        </div>
+    </div>
+    {% endblock %}
+</body>
+</html>

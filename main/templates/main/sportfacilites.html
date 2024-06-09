@@ -1,0 +1,40 @@
+{% extends 'main/base.html' %}
+
+{% load static %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/facilities.css' %}">
+    <title>Document</title>
+</head>
+<body>
+
+    <div class="content">
+        <!-- Add any content you want to display over the background image -->
+        <h2>Welcome to Sport Facilties Reservation</h2>
+        <p>Choose a Sport Facilties from here</p>
+    </div>
+
+    <div class="container">
+        <div class="one">
+            <span>Tennis Court</span>
+        </div>
+        <div class="two">
+            <span>Football Field</span>
+        </div>
+        <div class="three">
+           <span>Volley Ball Field</span>
+        </div>
+        <div class="four">
+             <span>Swimming Pool</span>
+        </div>
+    </div>
+
+    <a href="{% url 'facilities' %}"><button class = "back-button">Back</button></a>
+
+
+    {% endblock %}
+</body>
+</html>
