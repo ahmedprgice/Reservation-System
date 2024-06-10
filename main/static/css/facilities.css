@@ -65,3 +65,13 @@ a{
     height: 40px;
 }
 
+.availability {
+    font-size: 16px; /* Adjust font size */
+    color: white; /* Text color for available */
+    background-color: rgb(93, 202, 83); /* Background color for available */
+    padding: 5px 10px; /* Padding around the text */
+    border-radius: 5px; /* Rounded corners */
+    margin-left: auto; /* Push the element to the right */
+    margin-right: 16px;
+    margin-top: 12px;
+}
