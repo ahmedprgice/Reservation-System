@@ -14,24 +14,30 @@ def register_student(response):
         form = StudentForm(response.POST, response.FILES)
         if form.is_valid():
             form.save()
-        
-        return redirect("/home")
+            messages.success(response, 'Student registered successfully!')
+            return redirect("/home")
+        else:
+            # Add debug print statements
+            print("Form errors: ", form.errors)
+            messages.error(response, 'Error registering student: {}'.format(form.errors))
     else:
         form = StudentForm()
+    return render(response, "register/register_student.html", {"form": form})
 
-    return render(response, "register/register_student.html", {"form":form})
-
-def register_staff(response):
-    if response.method == "POST":
-        form = StaffForm(response.POST, response.FILES)
+def register_staff(request):
+    if request.method == "POST":
+        form = StaffForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-        
-        return redirect("/home")
+            messages.success(request, 'Staff registered successfully.')
+            return redirect("/home")
+        else:
+            # Add debug print statements
+            print("Form errors: ", form.errors)
+            messages.error(request, 'Error in staff registration.')
     else:
         form = StaffForm()
-
-    return render(response, "register/register_staff.html", {"form":form})
+    return render(request, "register/register_staff.html", {"form": form})
 
 
 def user_login(response):

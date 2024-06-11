@@ -8,8 +8,34 @@ form {
 
 .form-group{
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     width: 500px;
+}
+
+
+.form-group a{
+    color: #F6F6F6;
+    font-size: 15px;
+    font-family: "Barlow Semi Condensed", sans-serif;
+    text-transform: uppercase;
+    width: 300px;
+    margin-top: 10px;
+    text-decoration: none;
+    align-self: center;
+}
+
+.form-group a:hover{
+    color: #52D6F4;
+    text-decoration: underline;
+    font-size: 17px;
+}
+
+
+.form-group >div{
+    display: flex;
+    align-items: center;
+    width: 500px;
+    margin-top: 10px;
 }
 
 form label{
@@ -17,13 +43,13 @@ form label{
     font-size: 20px;
     font-family: "Barlow Semi Condensed", sans-serif;
     text-transform: uppercase;
-    width: 100%;
+    width: 300px;
     margin-top: 10px;
 
 }
 
 form input{
-    width: 100%;
+    width: 500px;
     height: 40px;
     margin: 10px;
     padding: 10px;

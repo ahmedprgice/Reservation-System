@@ -138,7 +138,9 @@ LOGOUT_REDIRECT_URL = '/'
 AUTHENTICATION_BACKENDS = [
 'django.contrib.auth.backends.ModelBackend',    
 'register.backends.LoginBackend',
+'main.backends.StudentBackend',
+'main.backends.StaffBackend',
 ]
 
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT = str(BASE_DIR / 'media')
 MEDIA_URL = '/media/'

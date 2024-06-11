@@ -27,7 +27,13 @@ class StudentForm(forms.ModelForm):
         if commit:
             student.save()
         return student
-    
+   
+    def clean_student_id(self):
+        student_id = self.cleaned_data.get('student_id')
+        if Student.objects.filter(student_id=student_id).exists():
+            raise forms.ValidationError('Student ID is already taken')
+        return student_id
+
     
 class StaffForm(forms.ModelForm):
     class Meta:
@@ -51,7 +57,12 @@ class StaffForm(forms.ModelForm):
         if commit:
             staff.save()
         return staff
-
+    
+    def clean_staff_id(self):
+        staff_id = self.cleaned_data.get('staff_id')
+        if Staff.objects.filter(staff_id=staff_id).exists():
+            raise forms.ValidationError('Staff ID is already taken')
+        return staff_id
     
 class LoginAuthForm(AuthenticationForm):
     username = forms.CharField(label='Student/Staff ID', max_length=100)

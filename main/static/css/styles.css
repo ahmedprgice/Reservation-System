@@ -9,6 +9,7 @@ body {
     min-height: 100vh; /* Ensure the body takes up the full viewport height */
 }
 
+
 header {
     color: #F6F6F6;
     padding: 20px;
@@ -83,7 +84,7 @@ footer {
     background-color: #52D6F4;
     color: #363538;
     text-align: center;
-    position: fixed;
+    position: absolute;
     bottom: 0;
     width: 100%;
 }
