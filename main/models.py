@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, Group, Permission
+from django.contrib.auth.hashers import check_password as auth_check_password
 # Create your models here.
 class Student(AbstractUser ):
     student_id = models.CharField(max_length=200)
@@ -31,6 +32,9 @@ class Student(AbstractUser ):
 
     def is_student(self):
         return True
+    
+    def set_password(self, raw_password):
+        self.password = raw_password
 
 class Staff(AbstractUser):
     staff_id = models.CharField(max_length=200)
@@ -63,6 +67,9 @@ class Staff(AbstractUser):
     def is_staff(self):
         return True
     
+    def set_password(self, raw_password):
+        self.password = raw_password
+        
 class Reservation(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     staff = models.ForeignKey(Staff, on_delete=models.CASCADE)

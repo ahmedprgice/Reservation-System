@@ -68,16 +68,30 @@ def sportfacilites_view(request):
 def Private_Study_Rooms(request):
     return render(request, 'main/privaterooms.html')
 
+@login_required
 def change_password(request):
-    if request.method == 'POST':
-        passform = ChangePasswordForm(request.user, request.POST)
-        if passform.is_valid():
-            user = passform.save()
-            update_session_auth_hash(request, user)#prevent user from being logged out
-            messages.success(request, 'Password updated successfully')
-            return redirect('/profile')
-        else:
-            messages.error(request, 'Password not updated')
+    if hasattr(request.user, 'student_id'):
+        user = Student.objects.get(id=request.user.id)
+        user_type = "Student"
+    elif hasattr(request.user, 'staff_id'):
+        user = Staff.objects.get(id=request.user.id)
+        user_type = "Staff"
     else:
-        passform = ChangePasswordForm(request.user)
-    return render(request, 'main/changepassword.html',{'passform': passform, 'messages': messages.get_messages(request)})
+        messages.error(request, 'User not found')
+        return redirect("/home")
+    
+    if request.method == 'POST':
+        form = ChangePasswordForm(user_type, user, request.POST)
+        if form.is_valid():
+            user.set_password(form.cleaned_data['new_password'])
+            user.save()
+            backend_path = 'main.backends.StudentBackend' if user_type == "Student" else 'main.backends.StaffBackend'
+            login(request, user, backend=backend_path)
+        
+            messages.success(request, 'Password updated successfully')
+            return redirect('/home')
+        else:
+            messages.error(request, 'Password not updated. Please correct the errors.')
+    else:
+        form = ChangePasswordForm(user_type,user)
+    return render(request, 'main/changepassword.html', {'form': form, 'messages': messages.get_messages(request)})
