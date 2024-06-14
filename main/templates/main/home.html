@@ -3,20 +3,28 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/homepagestyle.css' %}">
+</head>
     <!-- Main content area -->
     <div class="content-wrapper">
         <!-- New section for background image -->
         <section class="background-section">
-            <div class="content">
+            <div class="overlay-content">
                 <!-- Add any content you want to display over the background image -->
-                <h2>Welcome to Home</h2>
-                <p>Home</p>
+                <h2>Welcome To Our Campus</h2>
+                <p>The best community that dedicated to student success for undergraduate, graduate and doctoral</p>
             </div>
         </section>   
+        <div class="additional-content">
+            <h1>START YOUR JOURNEY HERE</h1>
+            <p>where the best started here</p>
+            <a href="{% url 'reservations' %}" class="reserve-button">Reserve your Facility</a>
+        </div>
     </div>
-    
 {% endblock %}
 
 {% block extracss %}
-    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
 {% endblock %}
