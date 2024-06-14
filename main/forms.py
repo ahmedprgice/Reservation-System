@@ -1,6 +1,8 @@
 from django import forms
 from django.contrib.auth.forms import PasswordChangeForm, UserChangeForm
 from main.models import Student, Staff
+from django import forms
+from .models import Reservation
 
 class ProfileForm(UserChangeForm):
     student_id = forms.CharField(label='Student ID', max_length=100, required=False)
@@ -58,3 +60,9 @@ class ChangePasswordForm(PasswordChangeForm):
         self.fields['old_password'].help_text = None
         self.fields['new_password1'].help_text = None
         self.fields['new_password2'].help_text = None
+
+
+class ReservationForm(forms.ModelForm):
+    class Meta:
+        model = Reservation
+        fields = ['class_code', 'date', 'time', 'guests', 'special_requests']

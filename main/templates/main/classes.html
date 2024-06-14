@@ -1,7 +1,7 @@
 {% extends 'main/base.html' %}
 {% block title %}Classes{% endblock %}
-{%load static%}
-{%block content %}
+{% load static %}
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,6 +9,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/facilities.css' %}">
     <title>Classes</title>
+    <style>
+        /* CSS for hiding the reservation form initially */
+        .reservation-form {
+            display: none;
+        }
+    </style>
 </head>
 <body>
     <div class="content">
@@ -17,26 +23,150 @@
         <p>Classes reservation</p>
     </div>
     <div class="container">
-        <div class="one">
-        <span>CNM1001</span>
-        <p class ="availability">Available</p>
+        <div class="class-item">
+            <span>CNM1001</span>
+            <div class="right-section">
+                <p class="availability">Available</p>
+                <button class="reserve" onclick="showReservationForm('form1')">Reserve</button>
+            </div>
         </div>
-        <div class="two">
-          <span>CNM1002</span></a>
-          <p class ="availability">Available</p>
+        <div class="class-item">
+            <span>CNM1002</span>
+            <div class="right-section">
+                <p class="availability">Available</p>
+                <button class="reserve" onclick="showReservationForm('form2')">Reserve</button>
+            </div>
         </div>
-        <div class="three">
+        <div class="class-item">
             <span>CNM1003</span>
-            <p class ="availability">Available</p>
+            <div class="right-section">
+                <p class="availability">Available</p>
+                <button class="reserve" onclick="showReservationForm('form3')">Reserve</button>
+            </div>
         </div>
-        <div class="four">
+        <div class="class-item">
             <span>CNM1004</span>
-            <p class ="availability">Available</p>
+            <div class="right-section">
+                <p class="availability">Available</p>
+                <button class="reserve" onclick="showReservationForm('form4')">Reserve</button>
+            </div>
         </div>
     </div>
-    <a href="{% url 'facilities' %}"><button class = "back-button">Back</button></a>
+
+    <!-- Reservation Form (hidden by default) -->
+    <div id="form1" class="reservation-form">
+        <h3>Reservation Form for CNM1001</h3>
+<!-- your_template.html -->
+<form action="{% url 'reservations' %}" method="post">
+    {% csrf_token %}
+    <label for="class_code">Class Code:</label><br>
+    <input type="text" id="class_code" name="class_code" required><br><br>
+
+    <label for="date">Date of Reservation:</label><br>
+    <input type="date" id="date" name="date" required><br><br>
+
+    <label for="time">Begin time of Reservation:</label><br>
+    <input type="time" id="time" name="time" required><br><br>
+
+    <label for="end_time">End time of Reservation:</label><br>
+    <input type="time" id="end_time" name="end_time" required><br><br>
+
+    
+
+    <label for="guests">Number of Guests:</label><br>
+    <input type="number" id="guests" name="guests" min="1" required><br><br>
+
+    <label for="special_requests">Special Requests:</label><br>
+    <textarea id="special_requests" name="special_requests" rows="4" cols="50"></textarea><br><br>
 
 
-{%endblock %}
+
+    <input type="submit" value="Submit">
+</form>
+
+        
+    </div>
+    <div id="form2" class="reservation-form">
+        <h3>Reservation Form for CNM1002</h3>
+        <!-- Your actual reservation form fields go here -->
+        <form>
+            <fieldset>
+                <legend>Reservation Details:</legend>
+                <label for="date">Date of Reservation:</label><br>
+                <input type="date" id="date" name="date" required><br><br>
+
+                <label for="time">Time of Reservation:</label><br>
+                <input type="time" id="time" name="time" required><br><br>
+
+                <label for="guests">Number of Guests:</label><br>
+                <input type="number" id="guests" name="guests" min="1" required><br><br>
+
+                <label for="requests">Special Requests:</label><br>
+                <textarea id="requests" name="requests" rows="4" cols="50"></textarea><br><br>
+            </fieldset>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+    <div id="form3" class="reservation-form">
+        <h3>Reservation Form for CNM1003</h3>
+        <!-- Your actual reservation form fields go here -->
+        <form>
+            <fieldset>
+                <legend>Reservation Details:</legend>
+                <label for="date">Date of Reservation:</label><br>
+                <input type="date" id="date" name="date" required><br><br>
+
+                <label for="time">Time of Reservation:</label><br>
+                <input type="time" id="time" name="time" required><br><br>
+
+                <label for="guests">Number of Guests:</label><br>
+                <input type="number" id="guests" name="guests" min="1" required><br><br>
+
+                <label for="requests">Special Requests:</label><br>
+                <textarea id="requests" name="requests" rows="4" cols="50"></textarea><br><br>
+            </fieldset>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+    <div id="form4" class="reservation-form">
+        <h3>Reservation Form for CNM1004</h3>
+        <!-- Your actual reservation form fields go here -->
+        <form>
+            <fieldset>
+                <legend>Reservation Details:</legend>
+                <label for="date">Date of Reservation:</label><br>
+                <input type="date" id="date" name="date" required><br><br>
+
+                <label for="time">Time of Reservation:</label><br>
+                <input type="time" id="time" name="time" required><br><br>
+
+                <label for="guests">Number of Guests:</label><br>
+                <input type="number" id="guests" name="guests" min="1" required><br><br>
+
+                <label for="requests">Special Requests:</label><br>
+                <textarea id="requests" name="requests" rows="4" cols="50"></textarea><br><br>
+            </fieldset>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+
+    <a href="{% url 'facilities' %}"><button class="back-button">Back</button></a>
+
+    <script>
+        function showReservationForm(formId) {
+            // Hide all reservation forms
+            var forms = document.getElementsByClassName("reservation-form");
+            for (var i = 0; i < forms.length; i++) {
+                forms[i].style.display = "none";
+            }
+            
+            // Show the selected reservation form
+            var selectedForm = document.getElementById(formId);
+            if (selectedForm) {
+                selectedForm.style.display = "block";
+            }
+        }
+    </script>
+{% endblock %}
 </body>
 </html>

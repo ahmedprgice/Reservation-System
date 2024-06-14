@@ -1,4 +1,3 @@
-
 .container {
     display: flex;
     flex-direction: column;
@@ -14,33 +13,28 @@ p {
     text-align: center;
 }
 
-.one, .two, .three, .four {
+.class-item {
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between; /* Space between span and right-section */
     align-items: center;
     color: black;
     background-color: white;
-    height: 100px;
+    height: 100px; /* Adjust height as needed */
     width: 850px; /* Adjust width as needed */
     margin-bottom: 10px; /* Adjust spacing between elements */
     border-radius: 5px;
+    padding: 20px; /* Add padding for inner spacing */
 }
 
 span {
     font-family: 'Inter', sans-serif; /* Change font to Inter */
     font-weight: 600; /* Semi-bold */
-    margin-left: 20px; /* Adjust the left padding */
+    margin-bottom: 10px; /* Adjust bottom margin */
 }
 
-a{
+a {
     color: black; 
-    
 }
-
-.one, .two, .three {
-    margin-bottom: 70px;
-}
-
 
 .back-button {
     background-color: #408697; 
@@ -65,13 +59,39 @@ a{
     height: 40px;
 }
 
+.right-section {
+    display: flex;
+    flex-direction: column; /* Stack availability and button vertically */
+    align-items: center; /* Align items to the center horizontally */
+}
+
 .availability {
     font-size: 16px; /* Adjust font size */
     color: white; /* Text color for available */
     background-color: rgb(93, 202, 83); /* Background color for available */
-    padding: 5px 10px; /* Padding around the text */
+    padding: 10px 20px; /* Padding around the text */
     border-radius: 5px; /* Rounded corners */
-    margin-left: auto; /* Push the element to the right */
-    margin-right: 16px;
-    margin-top: 12px;
+    margin-bottom: 10px; /* Add bottom margin */
+    text-align: center; /* Center text */
+    width: 100px; /* Set width to create equal size */
+   
+}
+
+.reserve {
+    background-color: #408697; 
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    padding: 10px 20px; /* Padding for better button size */
+    transition: background-color 0.3s;
+    width: 100px; /* Set width to match availability */
+}
+
+.reserve:hover {
+    background-color: #306a7b;
 }

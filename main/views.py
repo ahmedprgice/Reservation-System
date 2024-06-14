@@ -6,6 +6,9 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.contrib.auth import login
+from django.shortcuts import render, redirect
+from .models import Reservation
+from .forms import ReservationForm
 
 
 
@@ -24,8 +27,16 @@ def home(response):
 def facilities(response):
     return render(response, "main/facilities.html", {})
 
-def reservations(response):
-    return render(response, "main/reservations.html", {})
+def reservations(request):
+    if request.method == 'POST':
+        form = ReservationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('reservations')  # Redirect to the same page or another view
+    else:
+        form = ReservationForm()
+
+    return render(request, 'main/facilities.html', {'form': form})
 
 @login_required
 def update_profile(request):

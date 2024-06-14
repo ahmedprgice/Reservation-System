@@ -63,17 +63,14 @@ class Staff(AbstractUser):
     def is_staff(self):
         return True
     
+
 class Reservation(models.Model):
-    student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    staff = models.ForeignKey(Staff, on_delete=models.CASCADE)
+    class_code = models.CharField(max_length=10, default='')  # Example default value is an empty string
     date = models.DateField()
     time = models.TimeField()
-    duration = models.IntegerField()
-    status = models.CharField(max_length=200)
-
-    def __str__(self):
-        return self.student.name + ' ' + self.staff.name + ' ' + str(self.date) + ' ' + str(self.time) + ' ' + str(self.duration) + ' ' + self.status
-
+    guests = models.IntegerField()
+    special_requests = models.TextField(blank=True)
+    
 class Reviews(models.Model):
     review_id = models.CharField(max_length=200)
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
