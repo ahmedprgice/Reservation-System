@@ -1,20 +1,35 @@
+
 {% extends 'main/base.html' %}
 
-{% block title %}Facilities{% endblock %}
-{%load static%}
+{% block title %}Reservations{% endblock %}
+{% load static %}
 {% block content %}
-<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="{%static 'css/reservations.css' %}">
-    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/reservations.css' %}">
 </head>
-<body>
-  
-<!-- Main content area -->
-<h2>You can check your resrervation from here</h2>
-{% endblock %}
 
+<body>
+    
+    <p class ="fun">You check your reservation form here</p>
+    <div class="container">
+        <div>
+            Your Reservation
+            <p><strong>Facility Code:</strong> {{ class_code }}</p>
+            <p><strong>Date:</strong> {{ date }}</p>
+            <p><strong>Time:</strong> {{ time }}</p>
+        </div>
+       
+    </div>
+    <div class = "container">
+        <input type="text" placeholder="comment for a review....">
+    </div>
+    
+    
+
+    {% endblock %}
 </body>
 </html>
+
+

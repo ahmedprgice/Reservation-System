@@ -36,7 +36,7 @@ def reservations(request):
     else:
         form = ReservationForm()
 
-    return render(request, 'main/facilities.html', {'form': form})
+    return render(request, 'main/reservations.html', {'form': form})
 
 @login_required
 def update_profile(request):
