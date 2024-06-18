@@ -53,13 +53,43 @@ def save(self, commit=True):
         user.save()
     return user
 
+class ChangePasswordForm(forms.Form):
+    old_password = forms.CharField(label='Old Password', widget=forms.PasswordInput)
+    new_password = forms.CharField(label='New Password', widget=forms.PasswordInput)
+    confirm_password = forms.CharField(label='Confirm New Password', widget=forms.PasswordInput)
+   
+    def __init__(self, user_type, user, *args, **kwargs):
+        self.user_type = user_type
+        self.user = user
+        super().__init__(*args, **kwargs)
 
-class ChangePasswordForm(PasswordChangeForm):
-    def __init__(self, *args, **kwargs):
-        super(ChangePasswordForm, self).__init__(*args, **kwargs)
-        self.fields['old_password'].help_text = None
-        self.fields['new_password1'].help_text = None
-        self.fields['new_password2'].help_text = None
+    def clean_old_password(self):
+        old_password = self.cleaned_data.get('old_password')
+        if self.user_type == 'Student':
+            self.user = Student.objects.get(id=self.user.id)
+        elif self.user_type == 'Staff':
+            self.user = Staff.objects.get(id=self.user.id)
+        if old_password != self.user.password:
+            raise forms.ValidationError('Old password is incorrect')
+        return old_password
+    
+    def clean(self):
+        cleaned_data = super().clean()
+        new_password = cleaned_data.get('new_password')
+        confirm_password = cleaned_data.get('confirm_password')
+        if new_password and confirm_password and new_password != confirm_password:
+            raise forms.ValidationError('New passwords do not match')
+        return cleaned_data
+    
+    def save(self, commit=True):
+        new_password = self.cleaned_data['new_password']
+        if self.user_type == 'Student':
+            self.user.password = new_password
+        elif self.user_type == 'Staff':
+            self.user.password = new_password
+        if commit:
+            self.user.save()    
+        return self.user
 
 
 class ReservationForm(forms.ModelForm):

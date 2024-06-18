@@ -32,6 +32,9 @@ class Student(AbstractUser ):
     def is_student(self):
         return True
 
+    def set_password(self, raw_password):
+        self.password = raw_password
+
 class Staff(AbstractUser):
     staff_id = models.CharField(max_length=200)
     name = models.CharField(max_length=200)
@@ -63,6 +66,8 @@ class Staff(AbstractUser):
     def is_staff(self):
         return True
     
+    def set_password(self, raw_password):
+        self.password = raw_password
 
 class Reservation(models.Model):
     class_code = models.CharField(max_length=10, default='')  # Example default value is an empty string
