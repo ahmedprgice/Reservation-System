@@ -76,6 +76,9 @@ class Reservation(models.Model):
     guests = models.IntegerField()
     special_requests = models.TextField(blank=True)
     
+    def __str__(self):
+        return f"{self.class_code} on {self.date} at {self.time}"
+    
 class Reviews(models.Model):
     review_id = models.CharField(max_length=200)
     student = models.ForeignKey(Student, on_delete=models.CASCADE)

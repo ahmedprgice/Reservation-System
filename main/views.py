@@ -27,16 +27,20 @@ def home(response):
 def facilities(response):
     return render(response, "main/facilities.html", {})
 
+
 def reservations(request):
     if request.method == 'POST':
         form = ReservationForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('reservations')  # Redirect to the same page or another view
+            return redirect('reservations')
     else:
         form = ReservationForm()
 
-    return render(request, 'main/reservations.html', {'form': form})
+    reservations = Reservation.objects.all()
+    return render(request, 'main/reservations.html', {'form': form, 'reservations': reservations})
+
+
 
 @login_required
 def update_profile(request):
