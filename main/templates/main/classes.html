@@ -55,11 +55,11 @@
 
     <!-- Reservation Form (hidden by default) -->
     <div id="form1" class="reservation-form">
-        <h3>Reservation Form for CNM1001</h3>
+     
 <!-- your_template.html -->
 <form action="{% url 'reservations' %}" method="post">
     {% csrf_token %}
-    <label for="class_code">Class Code:</label><br>
+    <label for="class_code">Facility Code:</label><br>
     <input type="text" id="class_code" name="class_code" required><br><br>
 
     <label for="date">Date of Reservation:</label><br>
@@ -87,14 +87,14 @@
         
     </div>
     <div id="form2" class="reservation-form">
-        <h3>Reservation Form for CNM1002</h3>
+
         <!-- Your actual reservation form fields go here -->
         <form>
             <fieldset>
                 <legend>Reservation Details:</legend>
-                <label for="date">Date of Reservation:</label><br>
-                <input type="date" id="date" name="date" required><br><br>
-
+                <label for="class_code">Facility Code:</label><br>
+                <input type="text" id="class_code" name="class_code" required><br><br>
+            
                 <label for="time">Time of Reservation:</label><br>
                 <input type="time" id="time" name="time" required><br><br>
 
@@ -108,14 +108,14 @@
         </form>
     </div>
     <div id="form3" class="reservation-form">
-        <h3>Reservation Form for CNM1003</h3>
+
         <!-- Your actual reservation form fields go here -->
         <form>
             <fieldset>
                 <legend>Reservation Details:</legend>
-                <label for="date">Date of Reservation:</label><br>
-                <input type="date" id="date" name="date" required><br><br>
-
+                <label for="class_code">Facility Code:</label><br>
+                <input type="text" id="class_code" name="class_code" required><br><br>
+            
                 <label for="time">Time of Reservation:</label><br>
                 <input type="time" id="time" name="time" required><br><br>
 
@@ -129,14 +129,14 @@
         </form>
     </div>
     <div id="form4" class="reservation-form">
-        <h3>Reservation Form for CNM1004</h3>
+
         <!-- Your actual reservation form fields go here -->
         <form>
             <fieldset>
                 <legend>Reservation Details:</legend>
-                <label for="date">Date of Reservation:</label><br>
-                <input type="date" id="date" name="date" required><br><br>
-
+                <label for="class_code">Facility Code:</label><br>
+                <input type="text" id="class_code" name="class_code" required><br><br>
+            
                 <label for="time">Time of Reservation:</label><br>
                 <input type="time" id="time" name="time" required><br><br>
 

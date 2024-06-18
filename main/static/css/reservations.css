@@ -25,3 +25,12 @@ input{
    padding-left: 20px;
 }
 
+ .cancel {
+        background-color: rgb(190, 100, 100);
+        color: white;
+        display: block; /* Ensure it's a block element to center with margin */
+        margin: 0 auto; /* Centers horizontally */
+        width: fit-content; /* Allows the button to only take up the necessary width */
+        padding: 10px 20px; /* Adjust padding as needed */
+    }
+    

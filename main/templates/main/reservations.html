@@ -19,7 +19,9 @@
             {% for reservation in reservations %}
             <p><strong>Facility Code:</strong> {{ reservation.class_code }}</p>
             <p><strong>Date:</strong> {{ reservation.date }}</p>
-            <p><strong>Time:</strong> {{ reservation.time }}</p><hr>
+            <p><strong>Time:</strong> {{ reservation.time }}</p>
+            <button class = "cancel">Cancel</button><hr>
+            
               {%endfor%}
         </div>
        

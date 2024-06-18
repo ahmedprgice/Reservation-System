@@ -20,25 +20,25 @@
     <div class="content">
         <!-- Add any content you want to display over the background image -->
         <h2>Welcome to classes reservation</h2>
-        <p>Sport facilities reservation</p>
+        <p>Classes reservation</p>
     </div>
     <div class="container">
         <div class="class-item">
-            <span>Basketball Field</span>
+            <span>Football field</span>
             <div class="right-section">
                 <p class="availability">Available</p>
                 <button class="reserve" onclick="showReservationForm('form1')">Reserve</button>
             </div>
         </div>
         <div class="class-item">
-            <span>Tennis court</span>
+            <span>Tennis Court</span>
             <div class="right-section">
                 <p class="availability">Available</p>
                 <button class="reserve" onclick="showReservationForm('form2')">Reserve</button>
             </div>
         </div>
         <div class="class-item">
-            <span>Football Court</span>
+            <span>Volley Field</span>
             <div class="right-section">
                 <p class="availability">Available</p>
                 <button class="reserve" onclick="showReservationForm('form3')">Reserve</button>
@@ -55,7 +55,7 @@
 
     <!-- Reservation Form (hidden by default) -->
     <div id="form1" class="reservation-form">
-        
+
 <!-- your_template.html -->
 <form action="{% url 'reservations' %}" method="post">
     {% csrf_token %}
@@ -88,7 +88,7 @@
         
     </div>
     <div id="form2" class="reservation-form">
-       
+  
         <!-- Your actual reservation form fields go here -->
         <form>
             <fieldset>
@@ -112,7 +112,7 @@
         </form>
     </div>
     <div id="form3" class="reservation-form">
-       
+
         <!-- Your actual reservation form fields go here -->
         <form>
             <fieldset>
@@ -136,7 +136,7 @@
         </form>
     </div>
     <div id="form4" class="reservation-form">
-     
+
         <!-- Your actual reservation form fields go here -->
         <form>
             <fieldset>
