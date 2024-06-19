@@ -70,15 +70,23 @@ class Staff(AbstractUser):
         self.password = raw_password
 
 class Reservation(models.Model):
-    class_code = models.CharField(max_length=10, default='')  # Example default value is an empty string
+    class_code = models.CharField(max_length=10, default='')
     date = models.DateField()
     time = models.TimeField()
     guests = models.IntegerField()
     special_requests = models.TextField(blank=True)
-    
+    is_cancelled = models.BooleanField(default=False)
+
     def __str__(self):
         return f"{self.class_code} on {self.date} at {self.time}"
-    
+
+    def cancel_reservation(self):
+        # Mark reservation as cancelled
+        self.is_cancelled = True
+        self.save()
+        # Optionally, you can delete the reservation from the database
+        self.delete()
+        
 class Reviews(models.Model):
     review_id = models.CharField(max_length=200)
     student = models.ForeignKey(Student, on_delete=models.CASCADE)

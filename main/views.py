@@ -40,6 +40,21 @@ def reservations(request):
     reservations = Reservation.objects.all()
     return render(request, 'main/reservations.html', {'form': form, 'reservations': reservations})
 
+# views.py
+
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Reservation
+
+def cancel_reservation(request, reservation_id):
+    reservation = get_object_or_404(Reservation, pk=reservation_id)
+    
+    if request.method == 'POST':
+        reservation.cancel_reservation()
+        # Optionally, you can add a confirmation message or redirect to a different page
+        return redirect('reservations')
+    
+    # Handle GET request or display confirmation message
+    return render(request, 'main/cancel_confirmation.html', {'reservation': reservation})
 
 
 @login_required

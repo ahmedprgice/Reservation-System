@@ -1,8 +1,9 @@
+<!-- reservations.html -->
 
 {% extends 'main/base.html' %}
-
 {% block title %}Reservations{% endblock %}
 {% load static %}
+
 {% block content %}
 <head>
     <meta charset="UTF-8">
@@ -12,28 +13,31 @@
 
 <body>
     
-    <p class ="fun">You check your reservation form here</p>
+    <p class="fun">You can check your reservation form here</p>
     <div class="container">
         <div>
-            <p style="text-align: center;">Your Reservation </p>
+            <p style="text-align: center;">Your Reservations</p>
             {% for reservation in reservations %}
             <p><strong>Facility Code:</strong> {{ reservation.class_code }}</p>
             <p><strong>Date:</strong> {{ reservation.date }}</p>
             <p><strong>Time:</strong> {{ reservation.time }}</p>
-            <button class = "cancel">Cancel</button><hr>
-            
-              {%endfor%}
+            {% if not reservation.is_cancelled %}
+            <form action="{% url 'cancel_reservation' reservation.pk %}" method="post">
+                {% csrf_token %}
+                <input type="submit" value="Cancel Reservation">
+            </form>
+            {% else %}
+            <p><strong>Status:</strong> Cancelled</p>
+            {% endif %}
+            <hr>
+            {% endfor %}
         </div>
        
     </div>
-    <div class = "container">
-        <input type="text" placeholder="comment for a review....">
+    <div class="container">
+        <input type="text" placeholder="Comment for a review...">
     </div>
     
-    
-
-    {% endblock %}
+{% endblock %}
 </body>
 </html>
-
-

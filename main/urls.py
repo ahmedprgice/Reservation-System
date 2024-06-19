@@ -13,4 +13,8 @@ urlpatterns = [
     path('facilites/labs/', views.labs_view, name='labs'),
     path('facilites/sportfacilites/', views.sportfacilites_view, name='sportfacilites'),
     path('facilites/privaterooms/', views.Private_Study_Rooms, name='privaterooms'),
+    path('reservations/', views.reservations, name='reservations'),
+    # Add the cancel_reservation URL
+    path('cancel_reservation/<int:reservation_id>/', views.cancel_reservation, name='cancel_reservation'),
+    
 ]
