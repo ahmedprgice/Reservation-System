@@ -56,7 +56,7 @@ def save(self, commit=True):
 
 class ChangePasswordForm(forms.Form):
     old_password = forms.CharField(label='Old Password', widget=forms.PasswordInput, required=True, min_length=8, max_length=16)
-    new_password = forms.CharField(label='New Password', widget=forms.PasswordInput, required=True, min_length=8, max_length=16, validators=[RegexValidator(r'^\D+$', 'Password cannot be all numeric',code='invalid')])
+    new_password = forms.CharField(label='New Password', widget=forms.PasswordInput, required=True, min_length=8, max_length=16)
     confirm_password = forms.CharField(label='Confirm New Password', widget=forms.PasswordInput, required=True, min_length=8, max_length=16)
    
     def __init__(self, user_type, user, *args, **kwargs):
@@ -73,6 +73,16 @@ class ChangePasswordForm(forms.Form):
         if old_password != self.user.password:
             raise forms.ValidationError('Old password is incorrect')
         return old_password
+    
+    def clean_new_password(self):
+         new_password = self.cleaned_data.get('new_password')
+         if new_password.isnumeric():
+            raise forms.ValidationError('Password cannot be entirely numeric.')
+         if not any(char.isdigit() for char in new_password):
+                raise forms.ValidationError('Password must contain at least one numeric character.')
+         if not any(char.isalpha() for char in new_password):
+                raise forms.ValidationError('Password must contain at least one alphabetic character.')
+         return new_password
     
     def clean(self):
         cleaned_data = super().clean()

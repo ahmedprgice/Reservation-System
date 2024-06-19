@@ -14,7 +14,7 @@ class StudentForm(forms.ModelForm):
     student_id = forms.CharField(label='Student ID', max_length=100)
     name = forms.CharField(label='Name', max_length=100)
     email = forms.EmailField(label='Email', max_length=100)
-    password = forms.CharField(label='Password',widget=forms.PasswordInput ,required=True, min_length=8, max_length=16, validators=[RegexValidator(r'^\D+$', 'Password cannot be all numeric',code='invalid')])
+    password = forms.CharField(label='Password',widget=forms.PasswordInput ,required=True, min_length=8, max_length=16)
     def clean_email(self):
         email = self.cleaned_data.get('email')
         if Student.objects.filter(email=email).exists():
@@ -34,6 +34,18 @@ class StudentForm(forms.ModelForm):
         if Student.objects.filter(student_id=student_id).exists():
             raise forms.ValidationError('Student ID is already taken')
         return student_id
+    
+    def clean_password(self):
+        password = self.cleaned_data.get('password')
+        if len(password) < 8:
+            raise forms.ValidationError('Password must be at least 8 characters')
+        if password.isnumeric():
+            raise forms.ValidationError('Password must contain at least one letter')
+        if not any(char.isdigit() for char in password):
+            raise forms.ValidationError('Password must contain at least one number')
+        if not any(char.isalpha() for char in password):
+            raise forms.ValidationError('Password must contain at least one uppercase letter')
+        return password
 
     
 class StaffForm(forms.ModelForm):
@@ -44,7 +56,7 @@ class StaffForm(forms.ModelForm):
     staff_id = forms.CharField(label='Staff ID', max_length=100)
     name = forms.CharField(label='Name', max_length=100)
     email = forms.EmailField(label='Email', max_length=100)
-    password = forms.CharField(label='Password',widget=forms.PasswordInput,required=True, min_length=8, max_length=16, validators=[RegexValidator(r'^\D+$', 'Password cannot be all numeric',code='invalid')])
+    password = forms.CharField(label='Password',widget=forms.PasswordInput,required=True, min_length=8, max_length=16)
     def clean_email(self):
         email = self.cleaned_data.get('email')
         if Staff.objects.filter(email=email).exists():
@@ -64,6 +76,18 @@ class StaffForm(forms.ModelForm):
         if Staff.objects.filter(staff_id=staff_id).exists():
             raise forms.ValidationError('Staff ID is already taken')
         return staff_id
+    
+    def clean_password(self):
+        password = self.cleaned_data.get('password')
+        if len(password) < 8:
+            raise forms.ValidationError('Password must be at least 8 characters')
+        if password.isnumeric():
+            raise forms.ValidationError('Password must contain at least one letter')
+        if not any(char.isdigit() for char in password):
+            raise forms.ValidationError('Password must contain at least one number')
+        if not any(char.isalpha() for char in password):
+            raise forms.ValidationError('Password must contain at least one uppercase letter')
+        return password
     
 class LoginAuthForm(AuthenticationForm):
     username = forms.CharField(label='Student/Staff ID', max_length=100)
