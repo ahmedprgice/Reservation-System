@@ -39,12 +39,10 @@ class StudentForm(forms.ModelForm):
         password = self.cleaned_data.get('password')
         if len(password) < 8:
             raise forms.ValidationError('Password must be at least 8 characters')
-        if password.isnumeric():
-            raise forms.ValidationError('Password must contain at least one letter')
         if not any(char.isdigit() for char in password):
-            raise forms.ValidationError('Password must contain at least one number')
+                raise forms.ValidationError('Password must contain at least one number.')
         if not any(char.isalpha() for char in password):
-            raise forms.ValidationError('Password must contain at least one uppercase letter')
+                raise forms.ValidationError('Password must contain at least one alphabetic.')
         return password
 
     
@@ -81,12 +79,10 @@ class StaffForm(forms.ModelForm):
         password = self.cleaned_data.get('password')
         if len(password) < 8:
             raise forms.ValidationError('Password must be at least 8 characters')
-        if password.isnumeric():
-            raise forms.ValidationError('Password must contain at least one letter')
         if not any(char.isdigit() for char in password):
-            raise forms.ValidationError('Password must contain at least one number')
+                raise forms.ValidationError('Password must contain at least one number.')
         if not any(char.isalpha() for char in password):
-            raise forms.ValidationError('Password must contain at least one uppercase letter')
+                raise forms.ValidationError('Password must contain at least one alphabetic.')
         return password
     
 class LoginAuthForm(AuthenticationForm):

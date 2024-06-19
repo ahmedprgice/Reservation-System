@@ -76,12 +76,12 @@ class ChangePasswordForm(forms.Form):
     
     def clean_new_password(self):
          new_password = self.cleaned_data.get('new_password')
-         if new_password.isnumeric():
-            raise forms.ValidationError('Password cannot be entirely numeric.')
+        #  if new_password.isnumeric():
+        #     raise forms.ValidationError('Password cannot be entirely number.')
          if not any(char.isdigit() for char in new_password):
-                raise forms.ValidationError('Password must contain at least one numeric character.')
+                raise forms.ValidationError('Password must contain at least one number.')
          if not any(char.isalpha() for char in new_password):
-                raise forms.ValidationError('Password must contain at least one alphabetic character.')
+                raise forms.ValidationError('Password must contain at least one alphabetic.')
          return new_password
     
     def clean(self):
