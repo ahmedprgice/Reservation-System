@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import PasswordChangeForm, UserChangeForm
+from django.core.validators import RegexValidator
 from main.models import Student, Staff
 from django import forms
 from .models import Reservation
@@ -54,9 +55,9 @@ def save(self, commit=True):
     return user
 
 class ChangePasswordForm(forms.Form):
-    old_password = forms.CharField(label='Old Password', widget=forms.PasswordInput)
-    new_password = forms.CharField(label='New Password', widget=forms.PasswordInput)
-    confirm_password = forms.CharField(label='Confirm New Password', widget=forms.PasswordInput)
+    old_password = forms.CharField(label='Old Password', widget=forms.PasswordInput, required=True, min_length=8, max_length=16)
+    new_password = forms.CharField(label='New Password', widget=forms.PasswordInput, required=True, min_length=8, max_length=16)
+    confirm_password = forms.CharField(label='Confirm New Password', widget=forms.PasswordInput, required=True, min_length=8, max_length=16)
    
     def __init__(self, user_type, user, *args, **kwargs):
         self.user_type = user_type
@@ -72,6 +73,16 @@ class ChangePasswordForm(forms.Form):
         if old_password != self.user.password:
             raise forms.ValidationError('Old password is incorrect')
         return old_password
+    
+    def clean_new_password(self):
+         new_password = self.cleaned_data.get('new_password')
+        #  if new_password.isnumeric():
+        #     raise forms.ValidationError('Password cannot be entirely number.')
+         if not any(char.isdigit() for char in new_password):
+                raise forms.ValidationError('Password must contain at least one number.')
+         if not any(char.isalpha() for char in new_password):
+                raise forms.ValidationError('Password must contain at least one alphabetic.')
+         return new_password
     
     def clean(self):
         cleaned_data = super().clean()

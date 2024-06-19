@@ -7,6 +7,7 @@ body {
     color: #F6F6F6;
     position: relative;
     min-height: 100vh; /* Ensure the body takes up the full viewport height */
+    padding-bottom: 60px; /* Space for the footer */
 }
 
 
