@@ -2,6 +2,7 @@ from typing import Any
 from django import forms
 from main.models import Student, Staff
 from django.contrib.auth.forms import AuthenticationForm, UserChangeForm
+from django.core.validators import RegexValidator
 
 
 
@@ -13,7 +14,7 @@ class StudentForm(forms.ModelForm):
     student_id = forms.CharField(label='Student ID', max_length=100)
     name = forms.CharField(label='Name', max_length=100)
     email = forms.EmailField(label='Email', max_length=100)
-    password = forms.CharField(label='Password',widget=forms.PasswordInput)
+    password = forms.CharField(label='Password',widget=forms.PasswordInput ,required=True, min_length=8, max_length=16, validators=[RegexValidator(r'^\D+$', 'Password cannot be all numeric',code='invalid')])
     def clean_email(self):
         email = self.cleaned_data.get('email')
         if Student.objects.filter(email=email).exists():
@@ -43,7 +44,7 @@ class StaffForm(forms.ModelForm):
     staff_id = forms.CharField(label='Staff ID', max_length=100)
     name = forms.CharField(label='Name', max_length=100)
     email = forms.EmailField(label='Email', max_length=100)
-    password = forms.CharField(label='Password',widget=forms.PasswordInput)
+    password = forms.CharField(label='Password',widget=forms.PasswordInput,required=True, min_length=8, max_length=16, validators=[RegexValidator(r'^\D+$', 'Password cannot be all numeric',code='invalid')])
     def clean_email(self):
         email = self.cleaned_data.get('email')
         if Staff.objects.filter(email=email).exists():

@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import PasswordChangeForm, UserChangeForm
+from django.core.validators import RegexValidator
 from main.models import Student, Staff
 from django import forms
 from .models import Reservation
@@ -54,9 +55,9 @@ def save(self, commit=True):
     return user
 
 class ChangePasswordForm(forms.Form):
-    old_password = forms.CharField(label='Old Password', widget=forms.PasswordInput)
-    new_password = forms.CharField(label='New Password', widget=forms.PasswordInput)
-    confirm_password = forms.CharField(label='Confirm New Password', widget=forms.PasswordInput)
+    old_password = forms.CharField(label='Old Password', widget=forms.PasswordInput, required=True, min_length=8, max_length=16)
+    new_password = forms.CharField(label='New Password', widget=forms.PasswordInput, required=True, min_length=8, max_length=16, validators=[RegexValidator(r'^\D+$', 'Password cannot be all numeric',code='invalid')])
+    confirm_password = forms.CharField(label='Confirm New Password', widget=forms.PasswordInput, required=True, min_length=8, max_length=16)
    
     def __init__(self, user_type, user, *args, **kwargs):
         self.user_type = user_type
