@@ -103,7 +103,28 @@ class ChangePasswordForm(forms.Form):
         return self.user
 
 
+from django import forms
+from .models import Reservation
+from main.models import Student, Staff
+
 class ReservationForm(forms.ModelForm):
     class Meta:
         model = Reservation
         fields = ['class_code', 'date', 'time', 'guests', 'special_requests']
+    
+    def __init__(self, user=None, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.user = user
+        
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        
+        if isinstance(self.user, Student):
+            instance.student = self.user
+        elif isinstance(self.user, Staff):
+            instance.staff = self.user
+        
+        if commit:
+            instance.save()
+        
+        return instance

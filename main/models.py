@@ -69,6 +69,9 @@ class Staff(AbstractUser):
     def set_password(self, raw_password):
         self.password = raw_password
 
+from django.db import models
+from main.models import Student, Staff
+
 class Reservation(models.Model):
     class_code = models.CharField(max_length=10, default='')
     date = models.DateField()
@@ -76,6 +79,8 @@ class Reservation(models.Model):
     guests = models.IntegerField()
     special_requests = models.TextField(blank=True)
     is_cancelled = models.BooleanField(default=False)
+    student = models.ForeignKey(Student, on_delete=models.CASCADE, null=True, blank=True)
+    staff = models.ForeignKey(Staff, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return f"{self.class_code} on {self.date} at {self.time}"
@@ -84,6 +89,7 @@ class Reservation(models.Model):
         # Mark reservation as cancelled
         self.is_cancelled = True
         self.save()
+
         # Optionally, you can delete the reservation from the database
         self.delete()
         

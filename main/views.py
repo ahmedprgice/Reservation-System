@@ -9,6 +9,8 @@ from django.contrib.auth import login
 from django.shortcuts import render, redirect
 from .models import Reservation
 from .forms import ReservationForm
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import Reservation
 
 
 
@@ -27,24 +29,36 @@ def home(response):
 def facilities(response):
     return render(response, "main/facilities.html", {})
 
-
-def reservations(request):
-    if request.method == 'POST':
-        form = ReservationForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('reservations')
-    else:
-        form = ReservationForm()
-
-    reservations = Reservation.objects.all()
-    return render(request, 'main/reservations.html', {'form': form, 'reservations': reservations})
-
-# views.py
-
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
+from .forms import ReservationForm
 from .models import Reservation
 
+@login_required(login_url='/login/')
+def reservations(request):
+    if request.method == 'POST':
+        form = ReservationForm(user=request.user, data=request.POST)
+        if form.is_valid():
+            reservation = form.save(commit=False)
+            if hasattr(request.user, 'student_id'):
+                reservation.student = request.user
+            elif hasattr(request.user, 'staff_id'):
+                reservation.staff = request.user
+            reservation.save()
+            return redirect('reservations')
+    else:
+        form = ReservationForm(user=request.user)
+
+    if hasattr(request.user, 'student_id'):
+        reservations = Reservation.objects.filter(student=request.user)
+    elif hasattr(request.user, 'staff_id'):
+        reservations = Reservation.objects.filter(staff=request.user)
+    else:
+        reservations = Reservation.objects.none()
+
+    return render(request, 'main/reservations.html', {'form': form, 'reservations': reservations})
+
+@login_required
 def cancel_reservation(request, reservation_id):
     reservation = get_object_or_404(Reservation, pk=reservation_id)
     
