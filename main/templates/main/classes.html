@@ -34,28 +34,30 @@
                 {% endif %}
             </div>
         </div>
-        <div class="class-item">
-            <span>CNM1002</span>
-            <div class="right-section">
-                <p class="availability">Available</p>
-                {% if user.is_authenticated %}
-                <button class="reserve" onclick="showReservationForm('form2')">Reserve</button>
-                {% else %}
-                <button class="reserve" onclick="alert('Please login to reserve.');">Reserve</button>
-                {% endif %}
+            <div class="class-item">
+                <span>CNM1002</span>
+                <div class="right-section">
+                    <p class="availability">Available</p>
+                    {% if user.is_authenticated %}
+                    <button class="reserve" onclick="showReservationForm('form2')">Reserve</button>
+                    {% else %}
+                    <button class="reserve" onclick="alert('Please login to reserve.');">Reserve</button>
+                    {% endif %}
+                </div>
             </div>
-        </div>
-        <div class="class-item">
-            <span>CNM1003</span>
-            <div class="right-section">
-                <p class="availability">Available</p>
-                {% if user.is_authenticated %}
-                <button class="reserve" onclick="showReservationForm('form3')">Reserve</button>
-                {% else %}
-                <button class="reserve" onclick="alert('Please login to reserve.');">Reserve</button>
-                {% endif %}
+        
+            <div class="class-item">
+                <span>CNM1003</span>
+                <div class="right-section">
+                    <p class="availability">Available</p>
+                    {% if user.is_authenticated %}
+                    <button class="reserve" onclick="showReservationForm('form3')">Reserve</button>
+                    {% else %}
+                    <button class="reserve" onclick="alert('Please login to reserve.');">Reserve</button>
+                    {% endif %}
+                </div>
             </div>
-        </div>
+        
         <div class="class-item">
             <span>CNM1004</span>
             <div class="right-section">
@@ -69,6 +71,7 @@
         </div>
     </div>
 
+    <!-- Reservation Form (hidden by default) -->
     <div id="form1" class="reservation-form">
         {% if user.is_authenticated %}
         <!-- Display reservation form only if user is authenticated -->
@@ -100,7 +103,6 @@
         {% endif %}
     </div>
 
-    </div>
     <div id="form2" class="reservation-form">
         {% if user.is_authenticated %}
         <!-- Display reservation form only if user is authenticated -->
@@ -131,6 +133,7 @@
         <p>Please log in to make a reservation.</p>
         {% endif %}
     </div>
+
     <div id="form3" class="reservation-form">
         {% if user.is_authenticated %}
         <!-- Display reservation form only if user is authenticated -->
@@ -161,6 +164,7 @@
         <p>Please log in to make a reservation.</p>
         {% endif %}
     </div>
+
     <div id="form4" class="reservation-form">
         {% if user.is_authenticated %}
         <!-- Display reservation form only if user is authenticated -->
@@ -192,6 +196,8 @@
         {% endif %}
     </div>
 
+    <!-- Include other reservation forms (form2, form3, form4) as needed -->
+
     <a href="{% url 'facilities' %}"><button class="back-button">Back</button></a>
 
     <script>
@@ -209,6 +215,6 @@
             }
         }
     </script>
-{% endblock %}
 </body>
 </html>
+{% endblock %}
