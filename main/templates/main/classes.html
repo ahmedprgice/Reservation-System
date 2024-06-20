@@ -27,127 +27,169 @@
             <span>CNM1001</span>
             <div class="right-section">
                 <p class="availability">Available</p>
+                {% if user.is_authenticated %}
                 <button class="reserve" onclick="showReservationForm('form1')">Reserve</button>
+                {% else %}
+                <button class="reserve" onclick="alert('Please login to reserve.');">Reserve</button>
+                {% endif %}
             </div>
         </div>
         <div class="class-item">
             <span>CNM1002</span>
             <div class="right-section">
                 <p class="availability">Available</p>
+                {% if user.is_authenticated %}
                 <button class="reserve" onclick="showReservationForm('form2')">Reserve</button>
+                {% else %}
+                <button class="reserve" onclick="alert('Please login to reserve.');">Reserve</button>
+                {% endif %}
             </div>
         </div>
         <div class="class-item">
             <span>CNM1003</span>
             <div class="right-section">
                 <p class="availability">Available</p>
+                {% if user.is_authenticated %}
                 <button class="reserve" onclick="showReservationForm('form3')">Reserve</button>
+                {% else %}
+                <button class="reserve" onclick="alert('Please login to reserve.');">Reserve</button>
+                {% endif %}
             </div>
         </div>
         <div class="class-item">
             <span>CNM1004</span>
             <div class="right-section">
                 <p class="availability">Available</p>
+                {% if user.is_authenticated %}
                 <button class="reserve" onclick="showReservationForm('form4')">Reserve</button>
+                {% else %}
+                <button class="reserve" onclick="alert('Please login to reserve.');">Reserve</button>
+                {% endif %}
             </div>
         </div>
     </div>
 
-    <!-- Reservation Form (hidden by default) -->
     <div id="form1" class="reservation-form">
-     
-<!-- your_template.html -->
-<form action="{% url 'reservations' %}" method="post">
-    {% csrf_token %}
-    <label for="class_code">Facility Code:</label><br>
-    <input type="text" id="class_code" name="class_code" required><br><br>
-
-    <label for="date">Date of Reservation:</label><br>
-    <input type="date" id="date" name="date" required><br><br>
-
-    <label for="time">Begin time of Reservation:</label><br>
-    <input type="time" id="time" name="time" required><br><br>
-
-    <label for="end_time">End time of Reservation:</label><br>
-    <input type="time" id="end_time" name="end_time" required><br><br>
-
+        {% if user.is_authenticated %}
+        <!-- Display reservation form only if user is authenticated -->
+        <form action="{% url 'reservations' %}" method="post">
+            {% csrf_token %}
+            <label for="class_code">Facility Code:</label><br>
+            <input type="text" id="class_code" name="class_code" required><br><br>
     
+            <label for="date">Date of Reservation:</label><br>
+            <input type="date" id="date" name="date" required><br><br>
+    
+            <label for="time">Begin time of Reservation:</label><br>
+            <input type="time" id="time" name="time" required><br><br>
+    
+            <label for="end_time">End time of Reservation:</label><br>
+            <input type="time" id="end_time" name="end_time" required><br><br>
+    
+            <label for="guests">Number of Guests:</label><br>
+            <input type="number" id="guests" name="guests" min="1" required><br><br>
+    
+            <label for="special_requests">Special Requests:</label><br>
+            <textarea id="special_requests" name="special_requests" rows="4" cols="50"></textarea><br><br>
+    
+            <input type="submit" value="Submit">
+        </form>
+        {% else %}
+        <!-- Optionally display a message or redirect to login page -->
+        <p>Please log in to make a reservation.</p>
+        {% endif %}
+    </div>
 
-    <label for="guests">Number of Guests:</label><br>
-    <input type="number" id="guests" name="guests" min="1" required><br><br>
-
-    <label for="special_requests">Special Requests:</label><br>
-    <textarea id="special_requests" name="special_requests" rows="4" cols="50"></textarea><br><br>
-
-
-
-    <input type="submit" value="Submit">
-</form>
-
-        
     </div>
     <div id="form2" class="reservation-form">
-
-        <!-- Your actual reservation form fields go here -->
-        <form>
-            <fieldset>
-                <legend>Reservation Details:</legend>
-                <label for="class_code">Facility Code:</label><br>
-                <input type="text" id="class_code" name="class_code" required><br><br>
-            
-                <label for="time">Time of Reservation:</label><br>
-                <input type="time" id="time" name="time" required><br><br>
-
-                <label for="guests">Number of Guests:</label><br>
-                <input type="number" id="guests" name="guests" min="1" required><br><br>
-
-                <label for="requests">Special Requests:</label><br>
-                <textarea id="requests" name="requests" rows="4" cols="50"></textarea><br><br>
-            </fieldset>
+        {% if user.is_authenticated %}
+        <!-- Display reservation form only if user is authenticated -->
+        <form action="{% url 'reservations' %}" method="post">
+            {% csrf_token %}
+            <label for="class_code">Facility Code:</label><br>
+            <input type="text" id="class_code" name="class_code" required><br><br>
+    
+            <label for="date">Date of Reservation:</label><br>
+            <input type="date" id="date" name="date" required><br><br>
+    
+            <label for="time">Begin time of Reservation:</label><br>
+            <input type="time" id="time" name="time" required><br><br>
+    
+            <label for="end_time">End time of Reservation:</label><br>
+            <input type="time" id="end_time" name="end_time" required><br><br>
+    
+            <label for="guests">Number of Guests:</label><br>
+            <input type="number" id="guests" name="guests" min="1" required><br><br>
+    
+            <label for="special_requests">Special Requests:</label><br>
+            <textarea id="special_requests" name="special_requests" rows="4" cols="50"></textarea><br><br>
+    
             <input type="submit" value="Submit">
         </form>
+        {% else %}
+        <!-- Optionally display a message or redirect to login page -->
+        <p>Please log in to make a reservation.</p>
+        {% endif %}
     </div>
     <div id="form3" class="reservation-form">
-
-        <!-- Your actual reservation form fields go here -->
-        <form>
-            <fieldset>
-                <legend>Reservation Details:</legend>
-                <label for="class_code">Facility Code:</label><br>
-                <input type="text" id="class_code" name="class_code" required><br><br>
-            
-                <label for="time">Time of Reservation:</label><br>
-                <input type="time" id="time" name="time" required><br><br>
-
-                <label for="guests">Number of Guests:</label><br>
-                <input type="number" id="guests" name="guests" min="1" required><br><br>
-
-                <label for="requests">Special Requests:</label><br>
-                <textarea id="requests" name="requests" rows="4" cols="50"></textarea><br><br>
-            </fieldset>
+        {% if user.is_authenticated %}
+        <!-- Display reservation form only if user is authenticated -->
+        <form action="{% url 'reservations' %}" method="post">
+            {% csrf_token %}
+            <label for="class_code">Facility Code:</label><br>
+            <input type="text" id="class_code" name="class_code" required><br><br>
+    
+            <label for="date">Date of Reservation:</label><br>
+            <input type="date" id="date" name="date" required><br><br>
+    
+            <label for="time">Begin time of Reservation:</label><br>
+            <input type="time" id="time" name="time" required><br><br>
+    
+            <label for="end_time">End time of Reservation:</label><br>
+            <input type="time" id="end_time" name="end_time" required><br><br>
+    
+            <label for="guests">Number of Guests:</label><br>
+            <input type="number" id="guests" name="guests" min="1" required><br><br>
+    
+            <label for="special_requests">Special Requests:</label><br>
+            <textarea id="special_requests" name="special_requests" rows="4" cols="50"></textarea><br><br>
+    
             <input type="submit" value="Submit">
         </form>
+        {% else %}
+        <!-- Optionally display a message or redirect to login page -->
+        <p>Please log in to make a reservation.</p>
+        {% endif %}
     </div>
     <div id="form4" class="reservation-form">
-
-        <!-- Your actual reservation form fields go here -->
-        <form>
-            <fieldset>
-                <legend>Reservation Details:</legend>
-                <label for="class_code">Facility Code:</label><br>
-                <input type="text" id="class_code" name="class_code" required><br><br>
-            
-                <label for="time">Time of Reservation:</label><br>
-                <input type="time" id="time" name="time" required><br><br>
-
-                <label for="guests">Number of Guests:</label><br>
-                <input type="number" id="guests" name="guests" min="1" required><br><br>
-
-                <label for="requests">Special Requests:</label><br>
-                <textarea id="requests" name="requests" rows="4" cols="50"></textarea><br><br>
-            </fieldset>
+        {% if user.is_authenticated %}
+        <!-- Display reservation form only if user is authenticated -->
+        <form action="{% url 'reservations' %}" method="post">
+            {% csrf_token %}
+            <label for="class_code">Facility Code:</label><br>
+            <input type="text" id="class_code" name="class_code" required><br><br>
+    
+            <label for="date">Date of Reservation:</label><br>
+            <input type="date" id="date" name="date" required><br><br>
+    
+            <label for="time">Begin time of Reservation:</label><br>
+            <input type="time" id="time" name="time" required><br><br>
+    
+            <label for="end_time">End time of Reservation:</label><br>
+            <input type="time" id="end_time" name="end_time" required><br><br>
+    
+            <label for="guests">Number of Guests:</label><br>
+            <input type="number" id="guests" name="guests" min="1" required><br><br>
+    
+            <label for="special_requests">Special Requests:</label><br>
+            <textarea id="special_requests" name="special_requests" rows="4" cols="50"></textarea><br><br>
+    
             <input type="submit" value="Submit">
         </form>
+        {% else %}
+        <!-- Optionally display a message or redirect to login page -->
+        <p>Please log in to make a reservation.</p>
+        {% endif %}
     </div>
 
     <a href="{% url 'facilities' %}"><button class="back-button">Back</button></a>
