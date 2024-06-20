@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, Group, Permission
-# Create your models here.
-class Student(AbstractUser ):
+
+class Student(AbstractUser):
     student_id = models.CharField(max_length=200)
     name = models.CharField(max_length=200)
     email = models.EmailField()
@@ -69,9 +69,6 @@ class Staff(AbstractUser):
     def set_password(self, raw_password):
         self.password = raw_password
 
-from django.db import models
-from main.models import Student, Staff
-
 class Reservation(models.Model):
     class_code = models.CharField(max_length=10, default='')
     date = models.DateField()
@@ -79,20 +76,17 @@ class Reservation(models.Model):
     guests = models.IntegerField()
     special_requests = models.TextField(blank=True)
     is_cancelled = models.BooleanField(default=False)
-    student = models.ForeignKey(Student, on_delete=models.CASCADE, null=True, blank=True)
-    staff = models.ForeignKey(Staff, on_delete=models.CASCADE, null=True, blank=True)
+    student = models.ForeignKey(Student, null=True, blank=True, on_delete=models.SET_NULL)
+    staff = models.ForeignKey(Staff, null=True, blank=True, on_delete=models.SET_NULL)
 
     def __str__(self):
         return f"{self.class_code} on {self.date} at {self.time}"
 
     def cancel_reservation(self):
-        # Mark reservation as cancelled
         self.is_cancelled = True
         self.save()
-
-        # Optionally, you can delete the reservation from the database
         self.delete()
-        
+
 class Reviews(models.Model):
     review_id = models.CharField(max_length=200)
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
@@ -133,4 +127,3 @@ class AssetManager(models.Model):
 
     def __str__(self):
         return self.name
-    

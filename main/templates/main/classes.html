@@ -53,102 +53,37 @@
         </div>
     </div>
 
+    {% if user.is_authenticated %}
     <!-- Reservation Form (hidden by default) -->
     <div id="form1" class="reservation-form">
-     
-<!-- your_template.html -->
-<form action="{% url 'reservations' %}" method="post">
-    {% csrf_token %}
-    <label for="class_code">Facility Code:</label><br>
-    <input type="text" id="class_code" name="class_code" required><br><br>
+        <form action="{% url 'reservations' %}" method="post" onsubmit="return validateReservation('form1')">
+            {% csrf_token %}
+            <label for="class_code">Facility Code:</label><br>
+            <input type="text" id="class_code1" name="class_code" required><br><br>
 
-    <label for="date">Date of Reservation:</label><br>
-    <input type="date" id="date" name="date" required><br><br>
+            <label for="date">Date of Reservation:</label><br>
+            <input type="date" id="date1" name="date" required><br><br>
 
-    <label for="time">Begin time of Reservation:</label><br>
-    <input type="time" id="time" name="time" required><br><br>
+            <label for="time">Begin time of Reservation:</label><br>
+            <input type="time" id="time1" name="time" required><br><br>
 
-    <label for="end_time">End time of Reservation:</label><br>
-    <input type="time" id="end_time" name="end_time" required><br><br>
+            <label for="end_time">End time of Reservation:</label><br>
+            <input type="time" id="end_time1" name="end_time" required><br><br>
 
-    
+            <label for="guests">Number of Guests:</label><br>
+            <input type="number" id="guests1" name="guests" min="1" required><br><br>
 
-    <label for="guests">Number of Guests:</label><br>
-    <input type="number" id="guests" name="guests" min="1" required><br><br>
+            <label for="special_requests">Special Requests:</label><br>
+            <textarea id="special_requests1" name="special_requests" rows="4" cols="50"></textarea><br><br>
 
-    <label for="special_requests">Special Requests:</label><br>
-    <textarea id="special_requests" name="special_requests" rows="4" cols="50"></textarea><br><br>
-
-
-
-    <input type="submit" value="Submit">
-</form>
-
-        
-    </div>
-    <div id="form2" class="reservation-form">
-
-        <!-- Your actual reservation form fields go here -->
-        <form>
-            <fieldset>
-                <legend>Reservation Details:</legend>
-                <label for="class_code">Facility Code:</label><br>
-                <input type="text" id="class_code" name="class_code" required><br><br>
-            
-                <label for="time">Time of Reservation:</label><br>
-                <input type="time" id="time" name="time" required><br><br>
-
-                <label for="guests">Number of Guests:</label><br>
-                <input type="number" id="guests" name="guests" min="1" required><br><br>
-
-                <label for="requests">Special Requests:</label><br>
-                <textarea id="requests" name="requests" rows="4" cols="50"></textarea><br><br>
-            </fieldset>
             <input type="submit" value="Submit">
         </form>
     </div>
-    <div id="form3" class="reservation-form">
 
-        <!-- Your actual reservation form fields go here -->
-        <form>
-            <fieldset>
-                <legend>Reservation Details:</legend>
-                <label for="class_code">Facility Code:</label><br>
-                <input type="text" id="class_code" name="class_code" required><br><br>
-            
-                <label for="time">Time of Reservation:</label><br>
-                <input type="time" id="time" name="time" required><br><br>
-
-                <label for="guests">Number of Guests:</label><br>
-                <input type="number" id="guests" name="guests" min="1" required><br><br>
-
-                <label for="requests">Special Requests:</label><br>
-                <textarea id="requests" name="requests" rows="4" cols="50"></textarea><br><br>
-            </fieldset>
-            <input type="submit" value="Submit">
-        </form>
-    </div>
-    <div id="form4" class="reservation-form">
-
-        <!-- Your actual reservation form fields go here -->
-        <form>
-            <fieldset>
-                <legend>Reservation Details:</legend>
-                <label for="class_code">Facility Code:</label><br>
-                <input type="text" id="class_code" name="class_code" required><br><br>
-            
-                <label for="time">Time of Reservation:</label><br>
-                <input type="time" id="time" name="time" required><br><br>
-
-                <label for="guests">Number of Guests:</label><br>
-                <input type="number" id="guests" name="guests" min="1" required><br><br>
-
-                <label for="requests">Special Requests:</label><br>
-                <textarea id="requests" name="requests" rows="4" cols="50"></textarea><br><br>
-            </fieldset>
-            <input type="submit" value="Submit">
-        </form>
-    </div>
+    <!-- Repeat similar structure for other forms (form2, form3, form4) -->
+    {% else %}
+    <p style="font-size: 30px;">Please <a href="{% url 'login' %}" style="font-weight: bold; color: #408697;">log in</a> to make a reservation.</p>
+    {% endif %}
 
     <a href="{% url 'facilities' %}"><button class="back-button">Back</button></a>
 
@@ -166,7 +101,23 @@
                 selectedForm.style.display = "block";
             }
         }
+
+        function validateReservation(formId) {
+            var selectedDate = document.getElementById('date' + formId.slice(-1)).value;
+            var currentDate = new Date();
+            var inputDate = new Date(selectedDate);
+
+            // Compare selected date with current date
+            if (inputDate < currentDate) {
+                alert('Please select a future date for reservation.');
+                return false;
+            }
+
+            // Additional validation logic can be added here if needed
+
+            return true;
+        }
     </script>
-{% endblock %}
+    {%endblock%}
 </body>
 </html>

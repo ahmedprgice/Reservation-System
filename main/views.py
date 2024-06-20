@@ -29,7 +29,7 @@ def home(response):
 def facilities(response):
     return render(response, "main/facilities.html", {})
 
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .forms import ReservationForm
 from .models import Reservation
@@ -37,22 +37,22 @@ from .models import Reservation
 @login_required(login_url='/login/')
 def reservations(request):
     if request.method == 'POST':
-        form = ReservationForm(request.POST)
+        form = ReservationForm(user=request.user, data=request.POST)
         if form.is_valid():
             reservation = form.save(commit=False)
             if hasattr(request.user, 'student_id'):
-                reservation.student_id = request.user.id
+                reservation.student = request.user
             elif hasattr(request.user, 'staff_id'):
-                reservation.staff_id = request.user.id
+                reservation.staff = request.user
             reservation.save()
             return redirect('reservations')
     else:
-        form = ReservationForm()
+        form = ReservationForm(user=request.user)
 
     if hasattr(request.user, 'student_id'):
-        reservations = Reservation.objects.filter(student_id=request.user.id)
+        reservations = Reservation.objects.filter(student=request.user)
     elif hasattr(request.user, 'staff_id'):
-        reservations = Reservation.objects.filter(staff_id=request.user.id)
+        reservations = Reservation.objects.filter(staff=request.user)
     else:
         reservations = Reservation.objects.none()
 

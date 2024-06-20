@@ -102,29 +102,45 @@ class ChangePasswordForm(forms.Form):
             self.user.save()    
         return self.user
 
-
 from django import forms
 from .models import Reservation
-from main.models import Student, Staff
+
+# forms.py
+from django import forms
+from .models import Reservation
 
 class ReservationForm(forms.ModelForm):
     class Meta:
         model = Reservation
         fields = ['class_code', 'date', 'time', 'guests', 'special_requests']
-    
-    def __init__(self, user=None, *args, **kwargs):
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)  # Retrieve 'user' from kwargs or set to None
         super().__init__(*args, **kwargs)
         self.user = user
-        
+
+        # Example of handling user-related data
+        if user:
+            if hasattr(user, 'student_id'):
+                # Handle student-specific behavior
+                pass
+            elif hasattr(user, 'staff_id'):
+                # Handle staff-specific behavior
+                pass
+            else:
+                # Handle other cases or raise error
+                pass
+
     def save(self, commit=True):
         instance = super().save(commit=False)
-        
-        if isinstance(self.user, Student):
-            instance.student = self.user
-        elif isinstance(self.user, Staff):
-            instance.staff = self.user
-        
+        if self.user:
+            # Assign user to reservation instance based on logic
+            if hasattr(self.user, 'student_id'):
+                instance.student = self.user
+            elif hasattr(self.user, 'staff_id'):
+                instance.staff = self.user
+            # Add other logic as needed
+
         if commit:
             instance.save()
-        
         return instance
