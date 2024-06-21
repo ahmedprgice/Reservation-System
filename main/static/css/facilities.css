@@ -2,7 +2,6 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    
 }
 
 h2 {
@@ -21,10 +20,13 @@ p {
     color: black;
     background-color: white;
     height: 100px; /* Adjust height as needed */
-    width: 850px; /* Adjust width as needed */
+    width: 90%; /* Adjust width to 90% */
+    max-width: 850px; /* Set maximum width */
     margin-bottom: 10px; /* Adjust spacing between elements */
     border-radius: 5px;
     padding: 20px; /* Add padding for inner spacing */
+    min-width: 300px; /* Set minimum width */
+    flex: 1; /* Allow flexible growth */
 }
 
 span {
@@ -140,5 +142,4 @@ input[type="submit"] {
 input[type="submit"]:hover {
     background-color: #2d6a72;
 }
-
 

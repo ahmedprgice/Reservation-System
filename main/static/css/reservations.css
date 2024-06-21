@@ -1,14 +1,14 @@
-.container{
+.container {
     padding-top: 10px;
     margin-top: 70px;
-    border-radius:10px ;
+    border-radius: 10px;
     background-color: white;
     color: black;
     padding-bottom: 10px;
     font-weight: 600; /* Semi-bold */
 }
 
-.fun{
+.fun {
     text-align: center;
 }
 
@@ -17,20 +17,22 @@ h2 {
     text-align: center;
 }
 
-input{
-    width:690px;
+input {
+    width: 90%;
+    max-width: 690px;
     border: 0px solid #D9D9D9;
     border-radius: 10px;
     background-color: #D9D9D9;
-   padding-left: 20px;
+    padding-left: 20px;
+    margin: 10px auto; /* Centering the input */
+    display: block; /* Ensures the input is block-level for centering */
 }
 
- .cancel {
-        background-color: rgb(190, 100, 100);
-        color: white;
-        display: block; /* Ensure it's a block element to center with margin */
-        margin: 0 auto; /* Centers horizontally */
-        width: fit-content; /* Allows the button to only take up the necessary width */
-        padding: 10px 20px; /* Adjust padding as needed */
-    }
-    
+.cancel {
+    background-color: rgb(190, 100, 100);
+    color: white;
+    display: block; /* Ensure it's a block element to center with margin */
+    margin: 10px auto; /* Centers horizontally */
+    width: fit-content; /* Allows the button to only take up the necessary width */
+    padding: 10px 20px; /* Adjust padding as needed */
+}
