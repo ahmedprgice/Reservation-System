@@ -11,10 +11,45 @@
     <title>Classes</title>
     <style>
         /* CSS for hiding the reservation form initially */
-        .reservation-form {
+        .modal {
             display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+    
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 90%; /* Adjust width as needed */
+            max-width: 600px; /* Set maximum width */
+            height: 70%; /* Adjust height as needed */
+            max-height: 700px; /* Set maximum height */
+            overflow-y: auto; /* Enable vertical scrolling if content overflows */
+        }
+    
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+    
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
         }
     </style>
+    
 </head>
 <body>
     <div class="content">
@@ -27,78 +62,83 @@
             <span>CNM1001</span>
             <div class="right-section">
                 <p class="availability">Available</p>
-                <button class="reserve" onclick="showReservationForm('form1')">Reserve</button>
+                <button class="reserve" onclick="showModal('form1')">Reserve</button>
             </div>
         </div>
         <div class="class-item">
             <span>CNM1002</span>
             <div class="right-section">
                 <p class="availability">Available</p>
-                <button class="reserve" onclick="showReservationForm('form2')">Reserve</button>
+                <button class="reserve" onclick="showModal('form2')">Reserve</button>
             </div>
         </div>
         <div class="class-item">
             <span>CNM1003</span>
             <div class="right-section">
                 <p class="availability">Available</p>
-                <button class="reserve" onclick="showReservationForm('form3')">Reserve</button>
+                <button class="reserve" onclick="showModal('form3')">Reserve</button>
             </div>
         </div>
         <div class="class-item">
             <span>CNM1004</span>
             <div class="right-section">
                 <p class="availability">Available</p>
-                <button class="reserve" onclick="showReservationForm('form4')">Reserve</button>
+                <button class="reserve" onclick="showModal('form4')">Reserve</button>
             </div>
         </div>
     </div>
 
     {% if user.is_authenticated %}
-    <!-- Reservation Form (hidden by default) -->
-    <div id="form1" class="reservation-form">
-        <form action="{% url 'reservations' %}" method="post" onsubmit="return validateReservation('form1')">
-            {% csrf_token %}
-            <label for="class_code">Facility Code:</label><br>
-            <input type="text" id="class_code1" name="class_code" required><br><br>
+    <!-- Reservation Form Modals -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div id="form1" class="reservation-form">
+                <form action="{% url 'reservations' %}" method="post" onsubmit="return validateReservation('form1')">
+                    {% csrf_token %}
+                    <label for="class_code" style="color: black;">Facility Code:</label><br>
+                    <input type="text" id="class_code1" name="class_code" required><br><br>
 
-            <label for="date">Date of Reservation:</label><br>
-            <input type="date" id="date1" name="date" required><br><br>
+                    <label for="date" style="color: black;">Date of Reservation:</label><br>
+                    <input type="date" id="date1" name="date" required><br><br>
 
-            <label for="time">Begin time of Reservation:</label><br>
-            <input type="time" id="time1" name="time" required><br><br>
+                    <label for="time" style="color: black;">Begin time of Reservation:</label><br>
+                    <input type="time" id="time1" name="time" required><br><br>
 
-            <label for="end_time">End time of Reservation:</label><br>
-            <input type="time" id="end_time1" name="end_time" required><br><br>
+                    <label for="end_time" style="color: black;">End time of Reservation:</label><br>
+                    <input type="time" id="end_time1" name="end_time" required><br><br>
 
-            <label for="guests">Number of Guests:</label><br>
-            <input type="number" id="guests1" name="guests" min="1" max="20" required><br><br>  <!-- Updated max attribute -->
-            <label for="special_requests">Special Requests:</label><br>
-            <textarea id="special_requests1" name="special_requests" rows="4" cols="50"></textarea><br><br>
+                    <label for="guests" style="color: black;">Number of Guests:</label><br>
+                    <input type="number" id="guests1" name="guests" min="1" max="20" required><br><br>  <!-- Updated max attribute -->
+                    <label for="special_requests" style="color: black;">Special Requests:</label><br>
+                    <textarea id="special_requests1" name="special_requests" rows="4" cols="50"></textarea><br><br>
 
-            <input type="submit" value="Submit">
-        </form>
+                    <input type="submit" value="Submit">
+                </form>
+            </div>
+        </div>
     </div>
 
-    <!-- Repeat similar structure for other forms (form2, form3, form4) -->
+  
+
     {% else %}
     <p style="font-size: 30px;">Please <a href="{% url 'login' %}" style="font-weight: bold; color: #408697;">log in</a> to make a reservation.</p>
     {% endif %}
 
+    </div>
     <a href="{% url 'facilities' %}"><button class="back-button">Back</button></a>
-
+    <!-- Script for JavaScript functions -->
     <script>
-        function showReservationForm(formId) {
-            // Hide all reservation forms
-            var forms = document.getElementsByClassName("reservation-form");
-            for (var i = 0; i < forms.length; i++) {
-                forms[i].style.display = "none";
-            }
-            
-            // Show the selected reservation form
-            var selectedForm = document.getElementById(formId);
-            if (selectedForm) {
-                selectedForm.style.display = "block";
-            }
+        function showModal(formId) {
+            var modal = document.getElementById('modal');
+            var form = document.getElementById(formId);
+            modal.style.display = 'block';
+            form.style.display = 'block';
+        }
+
+        function closeModal() {
+            var modal = document.getElementById('modal');
+            modal.style.display = 'none';
         }
 
         function validateReservation(formId) {
@@ -117,6 +157,7 @@
             return true;
         }
     </script>
-    {%endblock%}
+    {% endblock %}
 </body>
 </html>
+
