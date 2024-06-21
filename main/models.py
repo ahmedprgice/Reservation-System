@@ -87,6 +87,29 @@ class Reservation(models.Model):
         self.save()
         self.delete()
 
+    def student_name(self):
+        return self.student.name if self.student else None
+    
+    def staff_name(self):
+        return self.staff.name if self.staff else None
+    
+    def student_id(self):
+        return self.student.student_id if self.student else None
+    
+    def staff_id(self):
+        return self.staff.staff_id if self.staff else None
+    
+    def is_student(self):
+        return bool(self.student)
+    
+    def is_staff(self):
+        return bool(self.staff)
+
+    student_name.short_description = 'Student Name'
+    student_id.short_description = 'Student ID'
+    staff_name.short_description = 'Staff Name'
+    staff_id.short_description = 'Staff ID'
+
 class Reviews(models.Model):
     review_id = models.CharField(max_length=200)
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
