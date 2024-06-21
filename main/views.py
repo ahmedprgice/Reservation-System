@@ -35,6 +35,7 @@ from .forms import ReservationForm
 from .models import Reservation
 
 @login_required(login_url='/login/')
+@login_required(login_url='/login/')
 def reservations(request):
     if request.method == 'POST':
         form = ReservationForm(user=request.user, data=request.POST)

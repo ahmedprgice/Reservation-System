@@ -101,18 +101,14 @@ class ChangePasswordForm(forms.Form):
         if commit:
             self.user.save()    
         return self.user
-
 from django import forms
-from .models import Reservation
-
-# forms.py
-from django import forms
+from django.db.models import Q  # Import Q
 from .models import Reservation
 
 class ReservationForm(forms.ModelForm):
     class Meta:
         model = Reservation
-        fields = ['class_code', 'date', 'time', 'guests', 'special_requests']
+        fields = ['class_code', 'date', 'time', 'end_time', 'guests', 'special_requests']
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)  # Retrieve 'user' from kwargs or set to None
@@ -130,6 +126,31 @@ class ReservationForm(forms.ModelForm):
             else:
                 # Handle other cases or raise error
                 pass
+
+    def clean(self):
+        cleaned_data = super().clean()
+        class_code = cleaned_data.get('class_code')
+        date = cleaned_data.get('date')
+        time = cleaned_data.get('time')
+        end_time = cleaned_data.get('end_time')
+
+        # Ensure end time is after begin time
+        if end_time <= time:
+            raise forms.ValidationError('End time must be after begin time.')
+
+        # Check for overlapping reservations
+        overlapping_reservations = Reservation.objects.filter(
+            class_code=class_code,
+            date=date,
+            is_cancelled=False
+        ).exclude(
+            Q(time__gte=end_time) | Q(end_time__lte=time)
+        )
+
+        if overlapping_reservations.exists():
+            raise forms.ValidationError('This class is already reserved for the selected time.')
+
+        return cleaned_data
 
     def save(self, commit=True):
         instance = super().save(commit=False)

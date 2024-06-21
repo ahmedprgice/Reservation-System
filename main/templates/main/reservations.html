@@ -1,5 +1,3 @@
-<!-- reservations.html -->
-
 {% extends 'main/base.html' %}
 {% block title %}Reservations{% endblock %}
 {% load static %}
@@ -12,7 +10,6 @@
 </head>
 
 <body>
-    
     <p class="fun">You can check your reservation form here</p>
     <div class="container">
         <div>
@@ -20,7 +17,7 @@
             {% for reservation in reservations %}
             <p><strong>Facility Code:</strong> {{ reservation.class_code }}</p>
             <p><strong>Date:</strong> {{ reservation.date }}</p>
-            <p><strong>Time:</strong> {{ reservation.time }}</p>
+            <p><strong>Time:</strong> {{ reservation.time }} - {{ reservation.end_time }}</p>
             {% if not reservation.is_cancelled %}
             <form action="{% url 'cancel_reservation' reservation.pk %}" method="post">
                 {% csrf_token %}
@@ -32,10 +29,27 @@
             <hr>
             {% endfor %}
         </div>
-       
+        
+        <!-- Reservation Form -->
+        <div>
+            
+                {% if form.errors %}
+                    <div class="form-errors">
+                        <ul>
+                            {% for field in form %}
+                                {% for error in field.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            {% endfor %}
+                            {% for error in form.non_field_errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+           
+        </div>
     </div>
-
-    
 {% endblock %}
 </body>
 </html>

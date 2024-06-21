@@ -68,11 +68,11 @@ class Staff(AbstractUser):
     
     def set_password(self, raw_password):
         self.password = raw_password
-
 class Reservation(models.Model):
     class_code = models.CharField(max_length=10, default='')
     date = models.DateField()
     time = models.TimeField()
+    end_time = models.TimeField()  # Add this field
     guests = models.IntegerField()
     special_requests = models.TextField(blank=True)
     is_cancelled = models.BooleanField(default=False)
@@ -80,7 +80,7 @@ class Reservation(models.Model):
     staff = models.ForeignKey(Staff, null=True, blank=True, on_delete=models.SET_NULL)
 
     def __str__(self):
-        return f"{self.class_code} on {self.date} at {self.time}"
+        return f"{self.class_code} on {self.date} from {self.time} to {self.end_time}"
 
     def cancel_reservation(self):
         self.is_cancelled = True

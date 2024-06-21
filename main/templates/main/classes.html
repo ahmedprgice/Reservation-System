@@ -54,8 +54,31 @@
             filter: blur(5px);
             -webkit-filter: blur(5px);
         }
+        
+        /* CSS for messages */
+        .messages {
+            margin: 10px 0;
+        }
+
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+        }
+
+        .alert.success {
+            color: #3c763d;
+            background-color: #dff0d8;
+            border-color: #d6e9c6;
+        }
+
+        .alert.error {
+            color: #a94442;
+            background-color: #f2dede;
+            border-color: #ebccd1;
+        }
     </style>
-    
 </head>
 <body>
     <div class="content">
@@ -95,6 +118,17 @@
     </div>
 
     {% if user.is_authenticated %}
+    <!-- Messages Block -->
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <div class="alert {{ message.tags }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
     <!-- Reservation Form Modals -->
     <div id="modal" class="modal">
         <div class="modal-content">
@@ -114,66 +148,52 @@
                     <label for="end_time" style="color: black;">End time of Reservation:</label><br>
                     <input type="time" id="end_time1" name="end_time" required><br><br>
 
-                    <label for="guests" style="color: black;">Number of Guests (Max 20):</label><br>
-                    <input type="number" id="guests1" name="guests" min="1" max="20" required><br><br>
-                    
+                    <label for="guests" style="color: black;">Guests:</label><br>
+                    <input type="number" id="guests1" name="guests" required><br><br>
+
                     <label for="special_requests" style="color: black;">Special Requests:</label><br>
                     <textarea id="special_requests1" name="special_requests" rows="4" cols="50"></textarea><br><br>
 
-                    <input type="submit" value="Submit">
+                    <input type="submit" value="Submit Reservation">
                 </form>
             </div>
+            <!-- Add more forms for other facilities if needed -->
         </div>
     </div>
+
     {% else %}
-    <p style="font-size: 30px;">Please <a href="{% url 'login' %}" style="font-weight: bold; color: #408697;">log in</a> to make a reservation.</p>
+    <p>Please log in to make a reservation.</p>
     {% endif %}
-
-    <a href="{% url 'facilities' %}"><button class="back-button">Back</button></a>
-
-    <!-- Script for JavaScript functions -->
+    
     <script>
         function showModal(formId) {
-            var modal = document.getElementById('modal');
-            var form = document.getElementById(formId);
-            var container = document.querySelector('.container');
-            
-            modal.style.display = 'block';
-            form.style.display = 'block';
-            container.classList.add('blur');
+            document.getElementById('modal').style.display = 'block';
+            document.getElementById(formId).style.display = 'block';
+            document.querySelector('.container').classList.add('blur');
         }
 
         function closeModal() {
-            var modal = document.getElementById('modal');
-            var container = document.querySelector('.container');
-            
-            modal.style.display = 'none';
-            container.classList.remove('blur');
+            document.getElementById('modal').style.display = 'none';
+            var forms = document.getElementsByClassName('reservation-form');
+            for (var i = 0; i < forms.length; i++) {
+                forms[i].style.display = 'none';
+            }
+            document.querySelector('.container').classList.remove('blur');
         }
 
         function validateReservation(formId) {
-            var selectedDate = document.getElementById('date' + formId.slice(-1)).value;
-            var currentTime = new Date();
-            var inputTime = new Date(selectedDate + 'T' + document.getElementById('time' + formId.slice(-1)).value);
-            var endTime = new Date(selectedDate + 'T' + document.getElementById('end_time' + formId.slice(-1)).value);
+            var form = document.getElementById(formId);
+            var time = form.querySelector('input[name="time"]').value;
+            var endTime = form.querySelector('input[name="end_time"]').value;
 
-            // Compare selected time with current time
-            if (inputTime < currentTime) {
-                alert('Please select a future time for reservation.');
+            if (endTime <= time) {
+                alert("End time must be after begin time.");
                 return false;
             }
-
-            // Ensure end time is after begin time
-            if (endTime <= inputTime) {
-                alert('End time must be after begin time.');
-                return false;
-            }
-
-            // Additional validation logic can be added here if needed
 
             return true;
         }
     </script>
+    {% endblock %}
 </body>
 </html>
-{% endblock %}
