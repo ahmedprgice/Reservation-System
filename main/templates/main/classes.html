@@ -48,6 +48,12 @@
             text-decoration: none;
             cursor: pointer;
         }
+
+        /* Add a blur effect to the background when the modal is displayed */
+        .blur {
+            filter: blur(5px);
+            -webkit-filter: blur(5px);
+        }
     </style>
     
 </head>
@@ -59,28 +65,28 @@
     </div>
     <div class="container">
         <div class="class-item">
-            <span>CNM1001</span>
+            <span style="font-size: 20px;">CNM1001</span>
             <div class="right-section">
                 <p class="availability">Available</p>
                 <button class="reserve" onclick="showModal('form1')">Reserve</button>
             </div>
         </div>
         <div class="class-item">
-            <span>CNM1002</span>
+            <span style="font-size: 20px;">CNM1002</span>
             <div class="right-section">
                 <p class="availability">Available</p>
                 <button class="reserve" onclick="showModal('form2')">Reserve</button>
             </div>
         </div>
         <div class="class-item">
-            <span>CNM1003</span>
+            <span style="font-size: 20px;">CNM1003</span>
             <div class="right-section">
                 <p class="availability">Available</p>
                 <button class="reserve" onclick="showModal('form3')">Reserve</button>
             </div>
         </div>
         <div class="class-item">
-            <span>CNM1004</span>
+            <span style="font-size: 20px;">CNM1004</span>
             <div class="right-section">
                 <p class="availability">Available</p>
                 <button class="reserve" onclick="showModal('form4')">Reserve</button>
@@ -108,8 +114,9 @@
                     <label for="end_time" style="color: black;">End time of Reservation:</label><br>
                     <input type="time" id="end_time1" name="end_time" required><br><br>
 
-                    <label for="guests" style="color: black;">Number of Guests:</label><br>
-                    <input type="number" id="guests1" name="guests" min="1" max="20" required><br><br>  <!-- Updated max attribute -->
+                    <label for="guests" style="color: black;">Number of Guests (Max 20):</label><br>
+                    <input type="number" id="guests1" name="guests" min="1" max="20" required><br><br>
+                    
                     <label for="special_requests" style="color: black;">Special Requests:</label><br>
                     <textarea id="special_requests1" name="special_requests" rows="4" cols="50"></textarea><br><br>
 
@@ -118,37 +125,47 @@
             </div>
         </div>
     </div>
-
-  
-
     {% else %}
     <p style="font-size: 30px;">Please <a href="{% url 'login' %}" style="font-weight: bold; color: #408697;">log in</a> to make a reservation.</p>
     {% endif %}
 
-    </div>
     <a href="{% url 'facilities' %}"><button class="back-button">Back</button></a>
+
     <!-- Script for JavaScript functions -->
     <script>
         function showModal(formId) {
             var modal = document.getElementById('modal');
             var form = document.getElementById(formId);
+            var container = document.querySelector('.container');
+            
             modal.style.display = 'block';
             form.style.display = 'block';
+            container.classList.add('blur');
         }
 
         function closeModal() {
             var modal = document.getElementById('modal');
+            var container = document.querySelector('.container');
+            
             modal.style.display = 'none';
+            container.classList.remove('blur');
         }
 
         function validateReservation(formId) {
             var selectedDate = document.getElementById('date' + formId.slice(-1)).value;
-            var currentDate = new Date();
-            var inputDate = new Date(selectedDate);
+            var currentTime = new Date();
+            var inputTime = new Date(selectedDate + 'T' + document.getElementById('time' + formId.slice(-1)).value);
+            var endTime = new Date(selectedDate + 'T' + document.getElementById('end_time' + formId.slice(-1)).value);
 
-            // Compare selected date with current date
-            if (inputDate < currentDate) {
-                alert('Please select a future date for reservation.');
+            // Compare selected time with current time
+            if (inputTime < currentTime) {
+                alert('Please select a future time for reservation.');
+                return false;
+            }
+
+            // Ensure end time is after begin time
+            if (endTime <= inputTime) {
+                alert('End time must be after begin time.');
                 return false;
             }
 
@@ -157,6 +174,6 @@
             return true;
         }
     </script>
-    {% endblock %}
 </body>
 </html>
+{% endblock %}
