@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Student, Staff, Reservation, Reviews, Facility, Facaulty 
+from .models import Student, Staff, Reservation, Reviews, Facility
 # Register your models here.
 
 class StudentAdmin(admin.ModelAdmin):
@@ -14,7 +14,7 @@ class StaffAdmin(admin.ModelAdmin):
     list_filter = ('staff_id', 'name', 'email', 'password' , 'profile_pic')
 
 class ReservationAdmin(admin.ModelAdmin):
-    list_display = ('class_code', 'date', 'time', 'student_name', 'student_id', 'staff_name','staff_id', 'is_student', 'is_staff')
+    list_display = ('class_code', 'date', 'time', 'end_time', 'student_name', 'student_id', 'staff_name','staff_id', 'is_student', 'is_staff')
     # 'reservation_id', 
     def student_name(self, obj):
         return obj.student.name if obj.student else None
@@ -38,11 +38,16 @@ class ReservationAdmin(admin.ModelAdmin):
     student_id.short_description = 'Student ID'
     staff_name.short_description = 'Staff Name'
     staff_id.short_description = 'Staff ID'
+
+class FacilityAdmin(admin.ModelAdmin):
+    list_display = ('facility_id', 'name', 'anemity', 'capacity', 'image')
+    search_fields = ('facility_id', 'name', 'anemity', 'capacity', 'image')
+    list_filter = ('facility_id', 'name', 'anemity', 'capacity', 'image')
 admin.site.register(Student, StudentAdmin)
 admin.site.register(Staff, StaffAdmin)
 admin.site.register(Reservation, ReservationAdmin)
 admin.site.register(Reviews)
-admin.site.register(Facility)
-admin.site.register(Facaulty)
+admin.site.register(Facility, FacilityAdmin)
+
 
 

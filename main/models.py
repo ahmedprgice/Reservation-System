@@ -69,7 +69,7 @@ class Staff(AbstractUser):
     def set_password(self, raw_password):
         self.password = raw_password
 class Reservation(models.Model):
-    class_code = models.CharField(max_length=10, default='')
+    class_code = models.CharField(max_length=20, default='')
     date = models.DateField()
     time = models.TimeField()
     end_time = models.TimeField()  # Add this field
@@ -121,26 +121,18 @@ class Reviews(models.Model):
         return self.student.name + ' ' + self.staff.name + ' ' + self.review + ' ' + str(self.rating)
     
 class Facility(models.Model):
-    facility_id = models.CharField(max_length=200)
+    facility_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=200)
     anemity = models.CharField(max_length=200)
     capacity = models.IntegerField()
     reservations = models.ManyToManyField(Reservation)
-    reviews = models.ManyToManyField(Reviews)
+    # reviews = models.ManyToManyField(Reviews)
     image = models.ImageField(upload_to='facility_pics', blank=True)
 
     def __str__(self):
-        return self.name
+        return self.name +''+ str(self.image)
     
-class Facaulty(models.Model):
-    faculty_id = models.CharField(max_length=200)
-    name = models.CharField(max_length=200)
-    facilities = models.ManyToManyField(Facility)
-    department = models.CharField(max_length=200)
-    image = models.ImageField(upload_to='faculty_pics', blank=True)
 
-    def __str__(self):
-        return self.name
     
 class AssetManager(models.Model):
     asset_manager_id = models.CharField(max_length=200)

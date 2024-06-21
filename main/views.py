@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Student, Staff, Reservation, Reviews, Facility, Facaulty
+from .models import Student, Staff, Reservation, Reviews, Facility
 from django.contrib.auth.decorators import login_required
 from .forms import ProfileForm, ChangePasswordForm
 from django.contrib.auth import update_session_auth_hash
@@ -27,7 +27,23 @@ def home(response):
 #     return render(response, "main/profile.html", {})
 
 def facilities(response):
-    return render(response, "main/facilities.html", {})
+    facilities = Facility.objects.all()
+    return render(response, "main/facilities.html", {"facilities":facilities})
+
+# def facility_anemity(response, facility_id):
+#     facility = get_object_or_404(Facility, pk=facility_id)
+#     return render(response, "main/facility_anemity.html", {"facility":facility})
+
+def facility_anemity(request, facility_anemity):
+    template_mapping = {
+        'classes': 'main/classes.html',
+        'labs': 'main/labs.html',
+        'sportfacilities': 'main/sportfacilites.html',
+        'privaterooms': 'main/privaterooms.html',
+    }
+
+    template = template_mapping.get(facility_anemity, 'main/home.html')  # Use a default template if not found
+    return render(request, template)
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
@@ -101,17 +117,17 @@ def update_profile(request):
             messages.error(request, 'Profile not updated')
     return render(request, "main/profile.html", {"user_form":user_form, "messages": messages.get_messages(request)})
 
-def classes_view(request):
-    return render(request, 'main/classes.html')
+# def classes_view(request):
+#     return render(request, 'main/classes.html')
 
-def labs_view(request):
-    return render(request, 'main/labs.html')
+# def labs_view(request):
+#     return render(request, 'main/labs.html')
 
-def sportfacilites_view(request):
-    return render(request, 'main/sportfacilites.html')
+# def sportfacilites_view(request):
+#     return render(request, 'main/sportfacilites.html')
 
-def Private_Study_Rooms(request):
-    return render(request, 'main/privaterooms.html')
+# def Private_Study_Rooms(request):
+#     return render(request, 'main/privaterooms.html')
 
 @login_required
 def change_password(request):

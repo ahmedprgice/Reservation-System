@@ -19,7 +19,24 @@
     </div>
 
     <div class="container">
-        <div class="class-item">
+        {% if facilities %}
+     
+            {% for facility in facilities %}
+            
+                <div class="class-item">
+                <a href="{% url 'facility_anemity' facility.anemity  %}" class="class-button">
+                    <img src="{{ facility.image.url }}" alt="{{ facility.name }}">
+                    {{ facility.name }}
+                </a>
+            </div>
+    
+            {% endfor %}
+        {% else %}
+            <p>No facilities found.</p>
+        {% endif %}
+    </div>
+    {% endblock %}    
+        <!-- <div class="class-item">
             <a href="{% url 'classes' %}" class="class-button">
                 <img src="{% static 'imgs/Class.png' %}" alt="Classroom">
                 Classes
@@ -42,9 +59,9 @@
                 <img src="{% static 'imgs/Private.jpg' %}" alt="Classroom">
                 Private Study Rooms
             </a>
-        </div>
-    </div>
+        </div> -->
+    
 
-    {% endblock %}
+    
 </body>
 </html>

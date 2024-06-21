@@ -11,6 +11,25 @@
     <title>Classes</title>
     <style>
         /* CSS for hiding the reservation form initially */
+        .alertmodal{
+            background-color: #f44336;
+            color: white;
+            padding: 10px;
+            margin-bottom: 15px;
+            text-align: center;
+            
+        }
+
+        .alertmodal a{
+            color: white;
+            text-decoration: underline;
+            margin-left: 10px;
+        }
+
+        .alertmodal a:hover{
+            
+            text-decoration: none;
+        }
         .modal {
             display: none;
             position: fixed;
@@ -81,12 +100,13 @@
     </style>
 </head>
 <body>
+
     <div class="content">
         <!-- Add any content you want to display over the background image -->
         <h2>Welcome to classes reservation</h2>
         <p>Classes reservation</p>
     </div>
-    <div class="container">
+    <!-- <div class="container">
         <div class="class-item">
             <span style="font-size: 20px;">CNM1001</span>
             <div class="right-section">
@@ -115,8 +135,18 @@
                 <button class="reserve" onclick="showModal('form4')">Reserve</button>
             </div>
         </div>
+    </div> -->
+    <div class="container">
+        {% for i in '0123' %}
+        <div class="class-item">
+            <span style="font-size: 20px;">CNM100{{  i|add:1 }}</span>
+            <div class="right-section">
+                <p class="availability">Available</p>
+                <button class="reserve" onclick="showModal('modal{{  i|add:1 }}','form{{  i|add:1 }}')">Reserve</button>
+            </div>
+        </div>
+        {% endfor %}
     </div>
-
     {% if user.is_authenticated %}
     <!-- Messages Block -->
     {% if messages %}
@@ -130,29 +160,30 @@
     {% endif %}
 
     <!-- Reservation Form Modals -->
-    <div id="modal" class="modal">
+    {% for i in '0123' %}
+    <div id="modal{{ i|add:1}}" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <div id="form1" class="reservation-form">
-                <form action="{% url 'reservations' %}" method="post" onsubmit="return validateReservation('form1')">
+            <span class="close" onclick="closeModal('modal{{  i|add:1 }}')">&times;</span>
+            <div id="form{{ i|add:1}}" class="reservation-form">
+                <form action="{% url 'reservations' %}" method="post" onsubmit="return validateReservation('form{{ i|add:1}}')">
                     {% csrf_token %}
-                    <label for="class_code" style="color: black;">Facility Code:</label><br>
-                    <input type="text" id="class_code1" name="class_code" required><br><br>
+                    <label for="class_code{{ i|add:1}}" style="color: black;">Facility Code:</label><br>
+                    <input type="text" id="class_code{{ i|add:1}}" name="class_code" value="CMN100{{ i|add:1}}"><br><br>
 
-                    <label for="date" style="color: black;">Date of Reservation:</label><br>
-                    <input type="date" id="date1" name="date" required><br><br>
+                    <label for="date{{ i|add:1}}" style="color: black;">Date of Reservation:</label><br>
+                    <input type="date" id="date{{ i|add:1}}" name="date" required><br><br>
 
-                    <label for="time" style="color: black;">Begin time of Reservation:</label><br>
-                    <input type="time" id="time1" name="time" required><br><br>
+                    <label for="time{{ i|add:1}}" style="color: black;">Begin time of Reservation:</label><br>
+                    <input type="time" id="time{{ i|add:1}}" name="time" required><br><br>
 
-                    <label for="end_time" style="color: black;">End time of Reservation:</label><br>
-                    <input type="time" id="end_time1" name="end_time" required><br><br>
+                    <label for="end_time{{ i|add:1}}" style="color: black;">End time of Reservation:</label><br>
+                    <input type="time" id="end_time{{ i|add:1}}" name="end_time" required><br><br>
 
-                    <label for="guests" style="color: black;">Guests:</label><br>
-                    <input type="number" id="guests1" name="guests" required><br><br>
+                    <label for="guests{{ i|add:1}}" style="color: black;">Guests:</label><br>
+                    <input type="number" id="guests{{ i|add:1}}" name="guests" required><br><br>
 
-                    <label for="special_requests" style="color: black;">Special Requests:</label><br>
-                    <textarea id="special_requests1" name="special_requests" rows="4" cols="50"></textarea><br><br>
+                    <label for="special_requests{{ i|add:1}}" style="color: black;">Special Requests:</label><br>
+                    <textarea id="special_requests{{ i|add:1}}" name="special_requests" rows="4" cols="50"></textarea><br><br>
 
                     <input type="submit" value="Submit Reservation">
                 </form>
@@ -160,20 +191,30 @@
             <!-- Add more forms for other facilities if needed -->
         </div>
     </div>
-
-    {% else %}
-    <p>Please log in to make a reservation.</p>
-    {% endif %}
+    {% endfor %}
     
+    {% else %}
+    <div class="alertmodal">
+        Please log in to make a reservation.
+    <a class="button" href="{% url 'login' %}">Login</a> <a>or</a> <a href="{% url 'register' %}">Sign Up</a>.
+    </div>
+    {% endif %}
+    <a href="{% url 'facilities' %}"><button class="back-button">Back</button></a>
     <script>
-        function showModal(formId) {
-            document.getElementById('modal').style.display = 'block';
+        function showAlert(alertId)
+        {
+            document.getElementById(alertId).style.display = 'block';
+            document.querySelector('.container').classList.add('blur');
+        }
+        function showModal(modalId,formId) {
+            console.log(modalId,formId);
+            document.getElementById(modalId).style.display = 'block';
             document.getElementById(formId).style.display = 'block';
             document.querySelector('.container').classList.add('blur');
         }
 
-        function closeModal() {
-            document.getElementById('modal').style.display = 'none';
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
             var forms = document.getElementsByClassName('reservation-form');
             for (var i = 0; i < forms.length; i++) {
                 forms[i].style.display = 'none';
@@ -182,6 +223,7 @@
         }
 
         function validateReservation(formId) {
+            console.log(formId);
             var form = document.getElementById(formId);
             var time = form.querySelector('input[name="time"]').value;
             var endTime = form.querySelector('input[name="end_time"]').value;
