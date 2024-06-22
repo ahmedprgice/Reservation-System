@@ -6,6 +6,10 @@
     color: black;
     padding-bottom: 10px;
     font-weight: 600; /* Semi-bold */
+    width: 40%;
+}
+.innercontainer {
+    width: 100%;
 }
 
 .fun {

@@ -142,7 +142,7 @@ class Reviews(models.Model):
     review = models.TextField()
     rating = models.IntegerField()
     facility = models.ForeignKey(Facility, on_delete=models.CASCADE, null=True, blank=True)
-    facility_class_code = models.CharField(max_length=20, default='')
+    facility_class_code = models.CharField(max_length=20, blank=True, null=True)
 
     def __str__(self):
         return self.review + ' ' + str(self.rating)

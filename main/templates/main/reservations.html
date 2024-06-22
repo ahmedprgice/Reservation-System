@@ -95,6 +95,83 @@
             background-color: #f2dede;
             border-color: #ebccd1;
         }
+        .btns{
+            display: flex;
+            justify-content: space-between;
+        }
+        .cancelbtn {
+            background-color: #f44336; 
+            border: none;
+            color: white;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            padding-right: 20px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            width: 100%;
+            cursor: pointer;
+            
+        }
+        .cancelbtn:hover {
+            background-color: #d32f2f;
+            color: white;
+            text-decoration: none;
+        }
+        .reviewbtn {
+            font-family: "Barlow Semi Condensed", sans-serif;
+            font-weight: 500;
+            background-color: #52D6F4; 
+            border: none;
+            border-radius: 10px;
+            color: #363538;
+            text-align: center;
+            text-decoration: none;
+            font-size: 16px;
+            width: 20%;
+            height: 35px;
+            cursor: pointer;
+            align-self: center;
+        }
+        .reviewbtn:hover {
+            font-family: "Barlow Semi Condensed", sans-serif;
+            font-style: normal;
+            background-color: #408697;
+            color: white;
+            text-decoration: none;
+        }
+
+        #modal-facility,
+        input[type="text"],
+        input[type="date"],
+        input[type="time"],
+        input[type="number"],
+        textarea {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        background-color:#D9D9D9
+        }
+
+        textarea {
+            height: 100px;
+        }
+
+        .review-form input[type="submit"] {
+            background-color: #408697;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        .review-form input[type="submit"]:hover {
+            background-color: #2d6a72;
+        }
+                
+
 
     </style>
 </head>
@@ -102,19 +179,20 @@
 <body>
     <p class="fun">You can check your reservation form here</p>
     <div class="container">
-        <div>
+        <div class="innercontainer">
             <p style="text-align: center;">Your Reservations</p>
             {% for reservation in reservations %}
             <p><strong>Facility Code:</strong> {{ reservation.class_code }}</p>
             <p><strong>Date:</strong> {{ reservation.date }}</p>
             <p><strong>Time:</strong> {{ reservation.time }} - {{ reservation.end_time }}</p>
             {% if not reservation.is_cancelled %}
-            <form action="{% url 'cancel_reservation' reservation.pk %}" method="post">
+            <div class="btns">
+            <button class="reviewbtn" data-facility-code="{{ reservation.class_code }}" onclick="showModal(this)">Review</button>
+            <form action="{% url 'cancel_reservation' reservation.pk %}" method="post" >
                 {% csrf_token %}
-                <input type="submit" value="Cancel Reservation">
+                <input type="submit" value="Cancel Reservation" class="cancelbtn">
             </form>
-            
-            <button class="review" data-facility-code="{{ reservation.class_code }}" onclick="showModal(this)">Review</button>
+        </div>
             {% else %}
             <p><strong>Status:</strong> Cancelled</p>
             {% endif %}
@@ -142,46 +220,66 @@
            
         </div>
     </div>
-    {% for facility in facilities %}
+    <!-- {% for facility in facilities %} -->
     <div id="modal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal('modal')">&times;</span>
             <div id="form" class="review-form">
-                <form method="post" action="{% url 'add_review' facility.facility_id %}"  onsubmit="return validatereview('form')">
+                <form id="review_form" method="post" action="{% url 'add_review' 0 %}" onsubmit="return validatereview('form')">
                     {% csrf_token %}
-                    <input type="hidden" name="facility_id" value="{{ facility.facility_id }}">
-                    {{facility.facility_id}}
-                    <div class="form-group">
+                    
+                     <div class="form-group">
                         <label for="rating" style="color: black;">Rating:</label><br>
                         <input type="number" id="rating" name="rating" min="1" max="5" required>
                     </div>
                     <div class="form-group">
                         <label for="review" style="color: black;">Review:</label><br>
-                        <textarea id="review" name="review" rows="4" cols="50" required></textarea>
+                        <textarea id="review" name="review" rows="2" cols="50" required></textarea>
                     </div>
 
                       <label for="facility" style="color: black;">Facility:</label><br>
                       <select id="modal-facility" name="facility" required>
                           {% for facility in facilities %}
-                              <option selected disabled value="{{ facility.name }}">{{ facility.name }}</option>
+                              <option disabled selected value="{{ facility.name }}">{{ facility.name }}</option>
                           {% endfor %}
                       </select>
-
-                    
+                    <div class="form-group">
+                        <label for="class_code" style="color: black;">Class Code:</label><br>
+                        <input type="text" id="class_code" name="class_code"  >
+                    </div>
                     <input type="submit" value="Submit Review">
                 </form>
             </div>
-            <!-- Add more forms for other facilities if needed -->
         </div>
     </div>
-{% endfor %}
+<!-- {% endfor %} -->
     <script>
           function showModal(button) {
             var facilityCode = button.getAttribute('data-facility-code');
+            var classCode= document.getElementById('class_code');
             console.log(facilityCode); // For debugging
             document.getElementById('modal').style.display = 'block';
             document.querySelector('.container').classList.add('blur');
             
+            var facility_id=0;
+            if(facilityCode.includes('CMN'))
+            {
+                facility_id=1;
+            }else if(facilityCode.includes('Lab')){
+                facility_id=2;
+            }else if(facilityCode.includes('Study')){
+                facility_id=4;
+            }else{
+                facility_id=3;
+            }
+            classCode.value= facilityCode;
+            var form = document.getElementById('review_form');
+            var actionUrl = "{% url 'add_review' 0 %}".replace('0', facility_id);
+            form.action = actionUrl; 
+            console.log("facility_id",facility_id);
+            console.log("form.action",form.action)
+
+
             setSelectedFacility(facilityCode);
         }
 
@@ -193,21 +291,21 @@
         }
 
         function setSelectedFacility(facilityCode) {
-    var facilityDropdown = document.getElementById('modal-facility');
-    for (var i = 0; i < facilityDropdown.options.length; i++) {
-        var option = facilityDropdown.options[i];
-        console.log("option",option);
-        if ((facilityCode.includes('CMN') && option.value.toLowerCase().includes('class')) ||
-            (facilityCode.includes('Lab') && option.value.toLowerCase().includes('lab')) ||
-            (facilityCode.includes('Study') && option.value.toLowerCase().includes('private room'))) {
-            facilityDropdown.selectedIndex = i;
-            break;
-        } else if (!facilityCode.includes('CMN') && !facilityCode.includes('Lab') && !facilityCode.includes('Study')) {
-            facilityDropdown.selectedIndex = 2;
-            break;
+            var facilityDropdown = document.getElementById('modal-facility');
+            for (var i = 0; i < facilityDropdown.options.length; i++) {
+                var option = facilityDropdown.options[i];
+                console.log("option",option);
+                if ((facilityCode.includes('CMN') && option.value.toLowerCase().includes('class')) ||
+                    (facilityCode.includes('Lab') && option.value.toLowerCase().includes('lab')) ||
+                    (facilityCode.includes('Study') && option.value.toLowerCase().includes('private room'))) {
+                    facilityDropdown.selectedIndex = i;
+                    break;
+                } else if (!facilityCode.includes('CMN') && !facilityCode.includes('Lab') && !facilityCode.includes('Study')) {
+                    facilityDropdown.selectedIndex = 2;
+                    break;
+                }
+            }
         }
-    }
-}
 
         
         function validatereview(formId) {
