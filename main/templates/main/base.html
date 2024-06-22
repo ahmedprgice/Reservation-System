@@ -22,6 +22,7 @@
             <li><a href="{% url 'home' %}" class="{% if request.path == '/home/' %}active{% endif %}">Home</a></li>
             <li><a href="{% url 'facilities' %}" class="{% if request.path == '/facilities/' %}active{% endif %}">Facilities</a></li>
             <li><a href="{% url 'reservations' %}" class="{% if request.path == '/reservations/' %}active{% endif %}">Reservations</a></li>
+            <li><a href="{% url 'reviews' %}" class="{% if request.path == '/reviews/' %}active{% endif %}">Reviews</a></li>
             <li>
                 {% if user.is_authenticated %}
                 

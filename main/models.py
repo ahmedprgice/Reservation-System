@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser, Group, Permission
+from django.db.models import Avg
 
 class Student(AbstractUser):
     student_id = models.CharField(max_length=200)
@@ -35,6 +36,9 @@ class Student(AbstractUser):
     def set_password(self, raw_password):
         self.password = raw_password
 
+    def __str__(self):
+        return self.name
+    
 class Staff(AbstractUser):
     staff_id = models.CharField(max_length=200)
     name = models.CharField(max_length=200)
@@ -68,6 +72,10 @@ class Staff(AbstractUser):
     
     def set_password(self, raw_password):
         self.password = raw_password
+
+    def __str__(self):
+        return self.name
+    
 class Reservation(models.Model):
     class_code = models.CharField(max_length=20, default='')
     date = models.DateField()
@@ -80,7 +88,7 @@ class Reservation(models.Model):
     staff = models.ForeignKey(Staff, null=True, blank=True, on_delete=models.SET_NULL)
 
     def __str__(self):
-        return f"{self.class_code} on {self.date} from {self.time} to {self.end_time}"
+        return self.class_code
 
     def cancel_reservation(self):
         self.is_cancelled = True
@@ -110,15 +118,7 @@ class Reservation(models.Model):
     staff_name.short_description = 'Staff Name'
     staff_id.short_description = 'Staff ID'
 
-class Reviews(models.Model):
-    review_id = models.CharField(max_length=200)
-    student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    staff = models.ForeignKey(Staff, on_delete=models.CASCADE)
-    review = models.TextField()
-    rating = models.IntegerField()
 
-    def __str__(self):
-        return self.student.name + ' ' + self.staff.name + ' ' + self.review + ' ' + str(self.rating)
     
 class Facility(models.Model):
     facility_id = models.AutoField(primary_key=True)
@@ -126,19 +126,32 @@ class Facility(models.Model):
     anemity = models.CharField(max_length=200)
     capacity = models.IntegerField()
     reservations = models.ManyToManyField(Reservation)
-    # reviews = models.ManyToManyField(Reviews)
     image = models.ImageField(upload_to='facility_pics', blank=True)
 
     def __str__(self):
-        return self.name +''+ str(self.image)
+        return self.name
     
-
+    def average_rating(self):
+        average = self.reviews.aggregate(Avg('rating'))['rating__avg']
+        return round(average, 1) if average is not None else None
     
-class AssetManager(models.Model):
-    asset_manager_id = models.CharField(max_length=200)
-    name = models.CharField(max_length=200)
-    email = models.EmailField()
-    password = models.CharField(max_length=200)
+class Reviews(models.Model):
+    review_id = models.AutoField(primary_key=True)
+    student = models.ForeignKey(Student, null=True, blank=True, on_delete=models.SET_NULL)
+    staff = models.ForeignKey(Staff, null=True, blank=True, on_delete=models.SET_NULL)
+    review = models.TextField()
+    rating = models.IntegerField()
+    facility = models.ForeignKey(Facility, on_delete=models.CASCADE, null=True, blank=True)
+    facility_class_code = models.CharField(max_length=20, default='')
 
     def __str__(self):
-        return self.name
+        return self.review + ' ' + str(self.rating)
+    
+    def student_id(self):
+        return self.student.student_id if self.student else None
+    
+    def staff_id(self):
+        return self.staff.staff_id if self.staff else None
+    
+    # def add_review(self):
+    #     self.save()

@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import PasswordChangeForm, UserChangeForm
 from django.core.validators import RegexValidator
-from main.models import Student, Staff
+from main.models import Student, Staff, Reviews
 from django import forms
 from .models import Reservation
 
@@ -162,6 +162,27 @@ class ReservationForm(forms.ModelForm):
                 instance.staff = self.user
             # Add other logic as needed
 
+        if commit:
+            instance.save()
+        return instance
+    
+class ReviewForm(forms.ModelForm):
+    class Meta:
+        model = Reviews
+        fields = ['rating', 'review', 'facility']
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+        self.user = user
+        
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        if self.user:
+            if hasattr(self.user, 'student_id'):
+                instance.student = self.user
+            elif hasattr(self.user, 'staff_id'):
+                instance.staff = self.user
         if commit:
             instance.save()
         return instance

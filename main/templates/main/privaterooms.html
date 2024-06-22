@@ -97,6 +97,36 @@
             background-color: #f2dede;
             border-color: #ebccd1;
         }
+        .reviews-container{
+            text-align: center;
+        }
+        .rev-button{
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+        .reviews-container .rev-button:hover{
+            text-decoration: none;
+            color: white;
+        }
+
+        .stars {
+        color: #ffffff;
+        }
+
+        .stars .fa-star {
+            font-size: 30px;
+        }
+
+        .fa-star.checked {
+            color: #ffd700; 
+        }
     </style>
 </head>
 <body>
@@ -105,7 +135,25 @@
         <h2>Welcome to Private Rooms reservation</h2>
         <p>Private Rooms reservation</p>
     </div>
-
+    {% for facility in facilities %}
+    <div class="reviews-container">
+        <a href="{% url 'reviews' %}" class="rev-button">
+            <span class="stars">
+                {% if facility.average_rating %}
+                    {% for star in "12345" %}
+                        {% if forloop.counter <= facility.average_rating %}
+                            <span class="fa fa-star checked"></span>
+                        {% else %}
+                            <span class="fa fa-star"></span>
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    No reviews yet
+                {% endif %}
+            </span>
+        </a>
+    </div>
+{% endfor %}
     <div class="container">
         {% for i in '0123' %}
         <div class="class-item">

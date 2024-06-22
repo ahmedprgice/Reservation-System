@@ -7,6 +7,96 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/reservations.css' %}">
+    <style>
+        /* CSS for hiding the reservation form initially */
+        .alertmodal{
+            background-color: #f44336;
+            color: white;
+            padding: 10px;
+            margin-bottom: 15px;
+            text-align: center;
+            
+        }
+
+        .alertmodal a{
+            color: white;
+            text-decoration: underline;
+            margin-left: 10px;
+        }
+
+        .alertmodal a:hover{
+            
+            text-decoration: none;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+    
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 90%; /* Adjust width as needed */
+            max-width: 600px; /* Set maximum width */
+            height: 70%; /* Adjust height as needed */
+            max-height: 700px; /* Set maximum height */
+            overflow-y: auto; /* Enable vertical scrolling if content overflows */
+        }
+    
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+    
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Add a blur effect to the background when the modal is displayed */
+        .blur {
+            filter: blur(5px);
+            -webkit-filter: blur(5px);
+        }
+        
+        /* CSS for messages */
+        .messages {
+            margin: 10px 0;
+        }
+
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid transparent;
+            border-radius: 4px;
+        }
+
+        .alert.success {
+            color: #3c763d;
+            background-color: #dff0d8;
+            border-color: #d6e9c6;
+        }
+
+        .alert.error {
+            color: #a94442;
+            background-color: #f2dede;
+            border-color: #ebccd1;
+        }
+
+    </style>
 </head>
 
 <body>
@@ -23,6 +113,8 @@
                 {% csrf_token %}
                 <input type="submit" value="Cancel Reservation">
             </form>
+            
+            <button class="review" data-facility-code="{{ reservation.class_code }}" onclick="showModal(this)">Review</button>
             {% else %}
             <p><strong>Status:</strong> Cancelled</p>
             {% endif %}
@@ -50,6 +142,86 @@
            
         </div>
     </div>
+    {% for facility in facilities %}
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('modal')">&times;</span>
+            <div id="form" class="review-form">
+                <form method="post" action="{% url 'add_review' facility.facility_id %}"  onsubmit="return validatereview('form')">
+                    {% csrf_token %}
+                    <input type="hidden" name="facility_id" value="{{ facility.facility_id }}">
+                    {{facility.facility_id}}
+                    <div class="form-group">
+                        <label for="rating" style="color: black;">Rating:</label><br>
+                        <input type="number" id="rating" name="rating" min="1" max="5" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="review" style="color: black;">Review:</label><br>
+                        <textarea id="review" name="review" rows="4" cols="50" required></textarea>
+                    </div>
+
+                      <label for="facility" style="color: black;">Facility:</label><br>
+                      <select id="modal-facility" name="facility" required>
+                          {% for facility in facilities %}
+                              <option selected disabled value="{{ facility.name }}">{{ facility.name }}</option>
+                          {% endfor %}
+                      </select>
+
+                    
+                    <input type="submit" value="Submit Review">
+                </form>
+            </div>
+            <!-- Add more forms for other facilities if needed -->
+        </div>
+    </div>
+{% endfor %}
+    <script>
+          function showModal(button) {
+            var facilityCode = button.getAttribute('data-facility-code');
+            console.log(facilityCode); // For debugging
+            document.getElementById('modal').style.display = 'block';
+            document.querySelector('.container').classList.add('blur');
+            
+            setSelectedFacility(facilityCode);
+        }
+
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+            var forms = document.getElementsByClassName('review-form');
+            document.querySelector('.container').classList.remove('blur');
+        }
+
+        function setSelectedFacility(facilityCode) {
+    var facilityDropdown = document.getElementById('modal-facility');
+    for (var i = 0; i < facilityDropdown.options.length; i++) {
+        var option = facilityDropdown.options[i];
+        console.log("option",option);
+        if ((facilityCode.includes('CMN') && option.value.toLowerCase().includes('class')) ||
+            (facilityCode.includes('Lab') && option.value.toLowerCase().includes('lab')) ||
+            (facilityCode.includes('Study') && option.value.toLowerCase().includes('private room'))) {
+            facilityDropdown.selectedIndex = i;
+            break;
+        } else if (!facilityCode.includes('CMN') && !facilityCode.includes('Lab') && !facilityCode.includes('Study')) {
+            facilityDropdown.selectedIndex = 2;
+            break;
+        }
+    }
+}
+
+        
+        function validatereview(formId) {
+            var form = document.getElementById(formId);
+            var rating = form.querySelector('input[name="rating"]').value;
+            
+            if (rating < 1 || rating > 5) {
+                alert("Rating must be between 1 and 5.");
+                return false;
+            }
+            
+            return true;
+        }
+    </script>
 {% endblock %}
 </body>
 </html>

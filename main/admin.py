@@ -15,7 +15,6 @@ class StaffAdmin(admin.ModelAdmin):
 
 class ReservationAdmin(admin.ModelAdmin):
     list_display = ('class_code', 'date', 'time', 'end_time', 'student_name', 'student_id', 'staff_name','staff_id', 'is_student', 'is_staff')
-    # 'reservation_id', 
     def student_name(self, obj):
         return obj.student.name if obj.student else None
 
@@ -43,10 +42,20 @@ class FacilityAdmin(admin.ModelAdmin):
     list_display = ('facility_id', 'name', 'anemity', 'capacity', 'image')
     search_fields = ('facility_id', 'name', 'anemity', 'capacity', 'image')
     list_filter = ('facility_id', 'name', 'anemity', 'capacity', 'image')
+
+class ReviewsAdmin(admin.ModelAdmin):
+    list_display = ('review_id', 'rating', 'review', 'student_id','staff_id', 'facility' ,'facility_class_code')
+    
+    def student_id(self, obj):
+        return obj.student.student_id if obj.student else None
+
+    def staff_id(self, obj):
+        return obj.staff.staff_id if obj.staff else None
+
 admin.site.register(Student, StudentAdmin)
 admin.site.register(Staff, StaffAdmin)
 admin.site.register(Reservation, ReservationAdmin)
-admin.site.register(Reviews)
+admin.site.register(Reviews, ReviewsAdmin)
 admin.site.register(Facility, FacilityAdmin)
 
 

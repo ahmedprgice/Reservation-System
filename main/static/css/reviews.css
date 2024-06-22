@@ -1,109 +1,52 @@
-form { 
+.reviews-list {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-top: 20px;
-
+    gap: 20px;
 }
 
-
-
-
-form label{
-    color: #F6F6F6;
-    font-size: 20px;
-    font-family: "Barlow Semi Condensed", sans-serif;
-    text-transform: uppercase;
-    width: 200px;
-    display: inline-block;
-    margin-top: 10px;
-}
-
-form input{
-    width: 300px;
-    height: 40px;
-    margin: 10px;
-    padding: 10px;
+.reviews-item {
+    width: 800px;
+    border: 1px solid #ccc;
     border-radius: 5px;
-    border: 1px solid #363538;
-    font-family: "Barlow Semi Condensed", sans-serif;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.review-id {
     font-weight: bold;
-    font-size: 18px;
-    display: inline-block;
+    min-width: 100px; 
+    display: flex;
+    align-self: flex-start;
 }
 
-form button.btn{
-    background-color:#408697;
-    text-align: center;
-    border-style: none;
-    border-width: 0;
-    text-transform: uppercase;
-    color: #F6F6F6;
-    font-size: 20px;
-    font-family: "Barlow Semi Condensed", sans-serif;
-    margin-left: 10px;
+.facility {
+    flex: 1; 
+    margin-right: 10px;
 }
 
-button.btn:hover{
-    color: #363538;
-    font-weight: bold;
-    background-color: #52D6F4;
+.stars {
+    color: #ffffff;
 }
 
-.help-text{
-    color: #F6F6F6;
-    font-size: 15px;
-    font-family: "Barlow Semi Condensed", sans-serif;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    display: none;
+.stars .fa-star {
+    font-size: 16px;
 }
 
-form li {
-    list-style-type: none;
+.review-comment {
     margin-top: 10px;
-    font-family: 'Barlow Semi Condensed', sans-serif;
+    display: flex;
     align-items: flex-start;
-    display: flex;
-    flex-direction: column;
 
 }
 
-.btnhelp{
-    background-color:#408697;
-    text-align: center;
-    border-style: none;
-    border-width: 0;
-    border-radius: 5px;
-    text-transform: uppercase;
-    color: #F6F6F6;
-    font-size: 20px;
-    font-family: "Barlow Semi Condensed", sans-serif;
-    margin-left: 10px;
-}
-
-button.btnhelp:hover{
-    color: #363538;
-    font-weight: bold;
-    background-color: #52D6F4;
-}
-
-.buttons{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-}
-
-.error{
-    color: #F6F6F6;
-    font-size: 15px;
-    font-family: "Barlow Semi Condensed", sans-serif;
-    margin-top: 20px;
-    margin-bottom: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.fa-star.checked {
+    color: #ffd700; 
 }

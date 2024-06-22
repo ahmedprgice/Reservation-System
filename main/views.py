@@ -1,18 +1,31 @@
-from django.shortcuts import render
-from .models import Student, Staff, Reservation, Reviews, Facility
-from django.contrib.auth.decorators import login_required
-from .forms import ProfileForm, ChangePasswordForm
-from django.contrib.auth import update_session_auth_hash
-from django.contrib import messages
-from django.shortcuts import redirect
-from django.contrib.auth import login
-from django.shortcuts import render, redirect
-from .models import Reservation
-from .forms import ReservationForm
+# from django.shortcuts import render
+# from .models import Student, Staff, Reservation, Reviews, Facility
+# from django.contrib.auth.decorators import login_required
+# from .forms import ProfileForm, ChangePasswordForm
+# from django.contrib.auth import update_session_auth_hash
+# from django.contrib import messages
+# from django.shortcuts import redirect
+# from django.contrib.auth import login
+# from django.shortcuts import render, redirect
+# from .models import Reservation
+# from .forms import ReservationForm
+# from django.shortcuts import render, redirect, get_object_or_404
+# from .models import Reservation
+# from django.shortcuts import render, redirect, get_object_or_404
+# from django.contrib.auth.decorators import login_required
+# from .forms import ReservationForm
+# from .models import Reservation
+
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Reservation
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import update_session_auth_hash, login
+from django.contrib import messages
+from .models import Student, Staff, Reservation, Reviews, Facility
+from .forms import ProfileForm, ChangePasswordForm, ReservationForm, ReviewForm  
+from django.db.models import Avg, Count
+import logging
 
-
+logger = logging.getLogger(__name__)
 
 # Create your views here.
 
@@ -22,17 +35,19 @@ def index(response):
 def home(response):
     return render(response, "main/home.html", {})
 
-# def profile(response):
-#     print(response.user)
-#     return render(response, "main/profile.html", {})
 
-def facilities(response):
+def facilities(request):
     facilities = Facility.objects.all()
-    return render(response, "main/facilities.html", {"facilities":facilities})
 
-# def facility_anemity(response, facility_id):
-#     facility = get_object_or_404(Facility, pk=facility_id)
-#     return render(response, "main/facility_anemity.html", {"facility":facility})
+    for facility in facilities:
+        reviews = Reviews.objects.filter(facility=facility)
+        logger.info(f"Facility1: {facility.name}, Number of reviews: {reviews.count()}")
+
+        average_rating = reviews.aggregate(Avg('rating'))['rating__avg']
+        facility.average_rating = round(average_rating, 1) if average_rating else None
+    
+
+    return render(request, "main/facilities.html", {"facilities": facilities})
 
 def facility_anemity(request, facility_anemity):
     template_mapping = {
@@ -41,18 +56,37 @@ def facility_anemity(request, facility_anemity):
         'sportfacilities': 'main/sportfacilites.html',
         'privaterooms': 'main/privaterooms.html',
     }
+    if facility_anemity in template_mapping:
+        facilities = Facility.objects.filter(anemity=facility_anemity)
 
-    template = template_mapping.get(facility_anemity, 'main/home.html')  # Use a default template if not found
-    return render(request, template)
+        for facility in facilities:
+            reviews = Reviews.objects.filter(facility=facility)
+            logger.info(f"Facility: {facility.name}, Number of reviews: {reviews.count()}")
+            average_rating = reviews.aggregate(Avg('rating'))['rating__avg']
+            facility.average_rating = round(average_rating, 1) if average_rating else None
+            logger.info(f"Facility: {facility.name}, Average rating: {facility.average_rating}")
 
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
-from .forms import ReservationForm
-from .models import Reservation
+        template = template_mapping[facility_anemity]
+    else:
+        facilities = Facility.objects.all()
+        template = 'main/home.html'  # Default template
+    
+    return render(request, template,{"facilities": facilities})
+
+
 
 @login_required(login_url='/login/')
 @login_required(login_url='/login/')
 def reservations(request):
+    facilities = Facility.objects.all()
+
+    for facility in facilities:
+        reviews = Reviews.objects.filter(facility=facility)
+        logger.info(f"Facility1: {facility.facility_id }")
+
+        average_rating = reviews.aggregate(Avg('rating'))['rating__avg']
+        facility.average_rating = round(average_rating, 1) if average_rating else None
+
     if request.method == 'POST':
         form = ReservationForm(user=request.user, data=request.POST)
         if form.is_valid():
@@ -73,7 +107,7 @@ def reservations(request):
     else:
         reservations = Reservation.objects.none()
 
-    return render(request, 'main/reservations.html', {'form': form, 'reservations': reservations})
+    return render(request, 'main/reservations.html', {'form': form, 'reservations': reservations ,"facilities": facilities})
 
 @login_required
 def cancel_reservation(request, reservation_id):
@@ -117,17 +151,6 @@ def update_profile(request):
             messages.error(request, 'Profile not updated')
     return render(request, "main/profile.html", {"user_form":user_form, "messages": messages.get_messages(request)})
 
-# def classes_view(request):
-#     return render(request, 'main/classes.html')
-
-# def labs_view(request):
-#     return render(request, 'main/labs.html')
-
-# def sportfacilites_view(request):
-#     return render(request, 'main/sportfacilites.html')
-
-# def Private_Study_Rooms(request):
-#     return render(request, 'main/privaterooms.html')
 
 @login_required
 def change_password(request):
@@ -156,3 +179,46 @@ def change_password(request):
     else:
         form = ChangePasswordForm(user_type,user)
     return render(request, 'main/changepassword.html', {'form': form, 'messages': messages.get_messages(request)})
+
+def reviews(response):
+    reviews = Reviews.objects.all()
+    return render(response, "main/reviews.html", {"reviews":reviews})
+
+# @login_required
+# def addreview(request, reservation_id):
+#     reservation  = get_object_or_404(Reservation, pk=reservation_id)
+
+#     if request.method == 'POST':
+#         form = ReviewForm(request.POST)
+#         if form.is_valid():
+#             review = form.save(commit=False)
+#             review.student = request.user  # Assuming the current user is the student
+#             review.facility_code = reservation.facility  # Assuming Reservation has a facility attribute
+#             review.save()
+#             # Optionally, you can add a confirmation message or redirect to a different page
+#             return redirect('reviews')
+#     else:
+#         form = ReviewForm()
+
+#     context = {
+#             'form': form,
+#             'reservation': reservation,
+#         }
+
+#     return render(request, "main/addreview.html", context)
+@login_required
+def add_review(request, facility_id):
+    facility = get_object_or_404(Facility, pk=facility_id)
+    
+    if request.method == 'POST':
+        form = ReviewForm(request.POST, user=request.user)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.facility = facility
+            review.save()
+            # Optionally, redirect to a 'success' page or the facility's detail page
+            return redirect('reviews')  # Assuming 'reviews' is your redirect name
+    else:
+        form = ReviewForm()
+    
+    return render(request, 'main/add_review.html', {'form': form, 'facility': facility})
