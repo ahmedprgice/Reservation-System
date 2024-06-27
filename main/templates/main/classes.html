@@ -157,38 +157,8 @@
                 </span>
             </a>
         </div>
-{% endfor %}
+    {% endfor %}
     
-    <!-- <div class="container">
-        <div class="class-item">
-            <span style="font-size: 20px;">CNM1001</span>
-            <div class="right-section">
-                <p class="availability">Available</p>
-                <button class="reserve" onclick="showModal('form1')">Reserve</button>
-            </div>
-        </div>
-        <div class="class-item">
-            <span style="font-size: 20px;">CNM1002</span>
-            <div class="right-section">
-                <p class="availability">Available</p>
-                <button class="reserve" onclick="showModal('form2')">Reserve</button>
-            </div>
-        </div>
-        <div class="class-item">
-            <span style="font-size: 20px;">CNM1003</span>
-            <div class="right-section">
-                <p class="availability">Available</p>
-                <button class="reserve" onclick="showModal('form3')">Reserve</button>
-            </div>
-        </div>
-        <div class="class-item">
-            <span style="font-size: 20px;">CNM1004</span>
-            <div class="right-section">
-                <p class="availability">Available</p>
-                <button class="reserve" onclick="showModal('form4')">Reserve</button>
-            </div>
-        </div>
-    </div> -->
     <div class="container">
         {% for i in '0123' %}
         <div class="class-item">
@@ -278,8 +248,17 @@
         function validateReservation(formId) {
             console.log(formId);
             var form = document.getElementById(formId);
+            var date = form.querySelector('input[name="date"]').value;
             var time = form.querySelector('input[name="time"]').value;
             var endTime = form.querySelector('input[name="end_time"]').value;
+
+            var today = new Date();
+            var selectedDate = new Date(date);
+
+            if (selectedDate < today.setHours(0,0,0,0)) {
+                alert("The selected date is in the past. Please choose a valid date.");
+                return false;
+            }
 
             if (endTime <= time) {
                 alert("End time must be after begin time.");
