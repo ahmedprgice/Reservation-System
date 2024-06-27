@@ -18,7 +18,6 @@
             padding: 10px;
             margin-bottom: 15px;
             text-align: center;
-            
         }
 
         .alertmodal a{
@@ -28,9 +27,9 @@
         }
 
         .alertmodal a:hover{
-            
             text-decoration: none;
         }
+
         .modal {
             display: none;
             position: fixed;
@@ -42,7 +41,7 @@
             overflow: auto;
             background-color: rgba(0,0,0,0.4);
         }
-    
+
         .modal-content {
             background-color: #fefefe;
             margin: 10% auto;
@@ -54,14 +53,14 @@
             max-height: 700px; /* Set maximum height */
             overflow-y: auto; /* Enable vertical scrolling if content overflows */
         }
-    
+
         .close {
             color: #aaa;
             float: right;
             font-size: 28px;
             font-weight: bold;
         }
-    
+
         .close:hover,
         .close:focus {
             color: black;
@@ -74,7 +73,7 @@
             filter: blur(5px);
             -webkit-filter: blur(5px);
         }
-        
+
         /* CSS for messages */
         .messages {
             margin: 10px 0;
@@ -98,10 +97,12 @@
             background-color: #f2dede;
             border-color: #ebccd1;
         }
-        .reviews-container{
+
+        .reviews-container {
             text-align: center;
         }
-        .rev-button{
+
+        .rev-button {
             border: none;
             color: white;
             padding: 15px 32px;
@@ -112,13 +113,14 @@
             margin: 4px 2px;
             cursor: pointer;
         }
-        .reviews-container .rev-button:hover{
+
+        .reviews-container .rev-button:hover {
             text-decoration: none;
             color: white;
         }
 
         .stars {
-        color: #ffffff;
+            color: #ffffff;
         }
 
         .stars .fa-star {
@@ -154,7 +156,7 @@
             </span>
         </a>
     </div>
-{% endfor %}
+    {% endfor %}
     <div class="container">
         {% for i in '0123' %}
         <div class="class-item">
@@ -215,18 +217,17 @@
     {% else %}
     <div class="alertmodal">
         Please log in to make a reservation.
-    <a class="button" href="{% url 'login' %}">Login</a> <a>or</a> <a href="{% url 'register' %}">Sign Up</a>.
+        <a class="button" href="{% url 'login' %}">Login</a> <a>or</a> <a href="{% url 'register' %}">Sign Up</a>.
     </div>
     {% endif %}
     <a href="{% url 'facilities' %}"><button class="back-button">Back</button></a>
     <script>
-        function showAlert(alertId)
-        {
+        function showAlert(alertId) {
             document.getElementById(alertId).style.display = 'block';
             document.querySelector('.container').classList.add('blur');
         }
-        function showModal(modalId,formId) {
-            console.log(modalId,formId);
+
+        function showModal(modalId, formId) {
             document.getElementById(modalId).style.display = 'block';
             document.getElementById(formId).style.display = 'block';
             document.querySelector('.container').classList.add('blur');
@@ -242,10 +243,18 @@
         }
 
         function validateReservation(formId) {
-            console.log(formId);
             var form = document.getElementById(formId);
+            var date = form.querySelector('input[name="date"]').value;
             var time = form.querySelector('input[name="time"]').value;
             var endTime = form.querySelector('input[name="end_time"]').value;
+
+            var today = new Date();
+            var selectedDate = new Date(date);
+
+            if (selectedDate < today.setHours(0,0,0,0)) {
+                alert("The selected date is in the past. Please choose a valid date.");
+                return false;
+            }
 
             if (endTime <= time) {
                 alert("End time must be after begin time.");

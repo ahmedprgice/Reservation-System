@@ -11,26 +11,24 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
     <title>Sport Facilities</title>
     <style>
-        /* CSS for hiding the reservation form initially */
-        .alertmodal{
+        .alertmodal {
             background-color: #f44336;
             color: white;
             padding: 10px;
             margin-bottom: 15px;
             text-align: center;
-            
         }
 
-        .alertmodal a{
+        .alertmodal a {
             color: white;
             text-decoration: underline;
             margin-left: 10px;
         }
 
-        .alertmodal a:hover{
-            
+        .alertmodal a:hover {
             text-decoration: none;
         }
+
         .modal {
             display: none;
             position: fixed;
@@ -42,26 +40,26 @@
             overflow: auto;
             background-color: rgba(0,0,0,0.4);
         }
-    
+
         .modal-content {
             background-color: #fefefe;
             margin: 10% auto;
             padding: 20px;
             border: 1px solid #888;
-            width: 90%; /* Adjust width as needed */
-            max-width: 600px; /* Set maximum width */
-            height: 70%; /* Adjust height as needed */
-            max-height: 700px; /* Set maximum height */
-            overflow-y: auto; /* Enable vertical scrolling if content overflows */
+            width: 90%;
+            max-width: 600px;
+            height: 70%;
+            max-height: 700px;
+            overflow-y: auto;
         }
-    
+
         .close {
             color: #aaa;
             float: right;
             font-size: 28px;
             font-weight: bold;
         }
-    
+
         .close:hover,
         .close:focus {
             color: black;
@@ -69,13 +67,11 @@
             cursor: pointer;
         }
 
-        /* Add a blur effect to the background when the modal is displayed */
         .blur {
             filter: blur(5px);
             -webkit-filter: blur(5px);
         }
-        
-        /* CSS for messages */
+
         .messages {
             margin: 10px 0;
         }
@@ -99,10 +95,11 @@
             border-color: #ebccd1;
         }
 
-        .reviews-container{
+        .reviews-container {
             text-align: center;
         }
-        .rev-button{
+
+        .rev-button {
             border: none;
             color: white;
             padding: 15px 32px;
@@ -113,13 +110,14 @@
             margin: 4px 2px;
             cursor: pointer;
         }
-        .reviews-container .rev-button:hover{
+
+        .reviews-container .rev-button:hover {
             text-decoration: none;
             color: white;
         }
 
         .stars {
-        color: #ffffff;
+            color: #ffffff;
         }
 
         .stars .fa-star {
@@ -133,7 +131,6 @@
 </head>
 <body>
     <div class="content">
-        <!-- Add any content you want to display over the background image -->
         <h2>Welcome to Sport Facilities reservation</h2>
         <p>Sport Facilities reservation</p>
     </div>
@@ -155,39 +152,38 @@
             </span>
         </a>
     </div>
-{% endfor %}
+    {% endfor %}
     <div class="container">
         <div class="class-item">
             <span>Football field</span>
             <div class="right-section">
                 <p class="availability">Available</p>
-                <button class="reserve" onclick="showModal('modal1','form1')">Reserve</button>
+                <button class="reserve" onclick="showModal('modal1', 'form1')">Reserve</button>
             </div>
         </div>
         <div class="class-item">
             <span>Tennis Court</span>
             <div class="right-section">
                 <p class="availability">Available</p>
-                <button class="reserve" onclick="showModal('modal2','form2')">Reserve</button>
+                <button class="reserve" onclick="showModal('modal2', 'form2')">Reserve</button>
             </div>
         </div>
         <div class="class-item">
             <span>Volley Field</span>
             <div class="right-section">
                 <p class="availability">Available</p>
-                <button class="reserve" onclick="showModal('modal3','form3')">Reserve</button>
+                <button class="reserve" onclick="showModal('modal3', 'form3')">Reserve</button>
             </div>
         </div>
         <div class="class-item">
             <span>Swimming Pool</span>
             <div class="right-section">
                 <p class="availability">Available</p>
-                <button class="reserve" onclick="showModal('modal4','form4')">Reserve</button>
+                <button class="reserve" onclick="showModal('modal4', 'form4')">Reserve</button>
             </div>
         </div>
     </div>
-        {% if user.is_authenticated %}
-    <!-- Messages Block -->
+    {% if user.is_authenticated %}
     {% if messages %}
     <div class="messages">
         {% for message in messages %}
@@ -198,41 +194,35 @@
     </div>
     {% endif %}
 
-    <!-- Reservation Form (hidden by default) -->
-    <!-- <div id="form1" class="reservation-form"> -->
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('modal1')">&times;</span>
+            <div id="form1" class="reservation-form">
+                <form action="{% url 'reservations' %}" method="post" onsubmit="return validateReservation('form1')">
+                    {% csrf_token %}
+                    <label for="class_code1" style="color: black;">Facility Code:</label><br>
+                    <input type="text" id="class_code1" name="class_code" value="Football field"><br><br>
 
-<!-- your_template.html -->
-<div id="modal1" class="modal">
-    <div class="modal-content">
-        <span class="close" onclick="closeModal('modal1')">&times;</span>
-        <div id="form1" class="reservation-form">
-            <form action="{% url 'reservations' %}" method="post" onsubmit="return validateReservation('form1')">
-                {% csrf_token %}
-                <label for="class_code1" style="color: black;">Facility Code:</label><br>
-                <input type="text" id="class_code1" name="class_code" value="Football field"><br><br>
+                    <label for="date1" style="color: black;">Date of Reservation:</label><br>
+                    <input type="date" id="date1" name="date" required><br><br>
 
-                <label for="date1" style="color: black;">Date of Reservation:</label><br>
-                <input type="date" id="date1" name="date" required><br><br>
+                    <label for="time1" style="color: black;">Begin time of Reservation:</label><br>
+                    <input type="time" id="time1" name="time" required><br><br>
 
-                <label for="time1" style="color: black;">Begin time of Reservation:</label><br>
-                <input type="time" id="time1" name="time" required><br><br>
+                    <label for="end_time1" style="color: black;">End time of Reservation:</label><br>
+                    <input type="time" id="end_time1" name="end_time" required><br><br>
 
-                <label for="end_time1" style="color: black;">End time of Reservation:</label><br>
-                <input type="time" id="end_time1" name="end_time" required><br><br>
+                    <label for="guests1" style="color: black;">Guests:</label><br>
+                    <input type="number" id="guests1" name="guests" required><br><br>
 
-                <label for="guests1" style="color: black;">Guests:</label><br>
-                <input type="number" id="guests1" name="guests" required><br><br>
+                    <label for="special_requests1" style="color: black;">Special Requests:</label><br>
+                    <textarea id="special_requests1" name="special_requests" rows="4" cols="50"></textarea><br><br>
 
-                <label for="special_requests1" style="color: black;">Special Requests:</label><br>
-                <textarea id="special_requests1" name="special_requests" rows="4" cols="50"></textarea><br><br>
-
-                <input type="submit" value="Submit Reservation">
-            </form>
+                    <input type="submit" value="Submit Reservation">
+                </form>
+            </div>
         </div>
-        <!-- Add more forms for other facilities if needed -->
     </div>
-</div>
-
 
     <div id="modal2" class="modal">
         <div class="modal-content">
@@ -261,7 +251,6 @@
                     <input type="submit" value="Submit Reservation">
                 </form>
             </div>
-            <!-- Add more forms for other facilities if needed -->
         </div>
     </div>
 
@@ -292,7 +281,6 @@
                     <input type="submit" value="Submit Reservation">
                 </form>
             </div>
-            <!-- Add more forms for other facilities if needed -->
         </div>
     </div>
 
@@ -323,69 +311,52 @@
                     <input type="submit" value="Submit Reservation">
                 </form>
             </div>
-            <!-- Add more forms for other facilities if needed -->
         </div>
     </div>
- {% else %}
+    {% else %}
     <div class="alertmodal">
         Please log in to make a reservation.
-    <a class="button" href="{% url 'login' %}">Login</a> <a>or</a> <a href="{% url 'register' %}">Sign Up</a>.
+        <a class="button" href="{% url 'login' %}">Login</a> <a>or</a> <a href="{% url 'register' %}">Sign Up</a>.
     </div>
     {% endif %}
     <a href="{% url 'facilities' %}"><button class="back-button">Back</button></a>
 
-    <!-- <script>
-        function showReservationForm(formId) {
-            // Hide all reservation forms
-            var forms = document.getElementsByClassName("reservation-form");
+    <script>
+        function showAlert(alertId) {
+            document.getElementById(alertId).style.display = 'block';
+            document.querySelector('.container').classList.add('blur');
+        }
+        
+        function showModal(modalId, formId) {
+            console.log(modalId, formId);
+            document.getElementById(modalId).style.display = 'block';
+            document.getElementById(formId).style.display = 'block';
+            document.querySelector('.container').classList.add('blur');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+            var forms = document.getElementsByClassName('reservation-form');
             for (var i = 0; i < forms.length; i++) {
-                forms[i].style.display = "none";
+                forms[i].style.display = 'none';
             }
-            
-            // Show the selected reservation form
-            var selectedForm = document.getElementById(formId);
-            if (selectedForm) {
-                selectedForm.style.display = "block";
+            document.querySelector('.container').classList.remove('blur');
+        }
+
+        function validateReservation(formId) {
+            console.log(formId);
+            var form = document.getElementById(formId);
+            var time = form.querySelector('input[name="time"]').value;
+            var endTime = form.querySelector('input[name="end_time"]').value;
+
+            if (endTime <= time) {
+                alert("End time must be after begin time.");
+                return false;
             }
+
+            return true;
         }
-    </script> -->
-
-<script>
-    function showAlert(alertId)
-    {
-        document.getElementById(alertId).style.display = 'block';
-        document.querySelector('.container').classList.add('blur');
-    }
-    function showModal(modalId,formId) {
-        console.log(modalId,formId);
-        document.getElementById(modalId).style.display = 'block';
-        document.getElementById(formId).style.display = 'block';
-        document.querySelector('.container').classList.add('blur');
-    }
-
-    function closeModal(modalId) {
-        document.getElementById(modalId).style.display = 'none';
-        var forms = document.getElementsByClassName('reservation-form');
-        for (var i = 0; i < forms.length; i++) {
-            forms[i].style.display = 'none';
-        }
-        document.querySelector('.container').classList.remove('blur');
-    }
-
-    function validateReservation(formId) {
-        console.log(formId);
-        var form = document.getElementById(formId);
-        var time = form.querySelector('input[name="time"]').value;
-        var endTime = form.querySelector('input[name="end_time"]').value;
-
-        if (endTime <= time) {
-            alert("End time must be after begin time.");
-            return false;
-        }
-
-        return true;
-    }
-</script>
+    </script>
 {% endblock %}
 </body>
 </html>
