@@ -40,3 +40,52 @@ input {
     width: fit-content; /* Allows the button to only take up the necessary width */
     padding: 10px 20px; /* Adjust padding as needed */
 }
+
+/* Ensure your existing CSS is integrated here */
+
+/* Media Queries for Responsiveness */
+@media (max-width: 1200px) {
+    .container {
+        width: 60%; /* Adjust container width for medium screens */
+    }
+}
+
+@media (max-width: 992px) {
+    .container {
+        width: 80%; /* Adjust container width for smaller screens */
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        width: 90%; /* Adjust container width for tablets */
+    }
+}
+
+@media (max-width: 576px) {
+    .container {
+        width: 100%; /* Full width on mobile devices */
+        padding: 0 10px; /* Adjust padding for smaller screens */
+    }
+    
+    .reviewbtn {
+        font-size: 14px; /* Decrease button font size for smaller screens */
+        height: 30px; /* Adjust button height for smaller screens */
+    }
+    
+    .cancelbtn {
+        font-size: 14px; /* Decrease button font size for smaller screens */
+        padding-top: 4px; /* Adjust button padding for smaller screens */
+        padding-bottom: 4px;
+    }
+    
+    .modal-content {
+        width: 95%; /* Adjust modal width for smaller screens */
+        max-width: 100%; /* Ensure modal doesn't exceed screen width */
+        height: 80%; /* Adjust modal height for smaller screens */
+    }
+    
+    .modal-content form input[type="submit"] {
+        padding: 8px 16px; /* Adjust submit button padding for smaller screens */
+    }
+}

@@ -1,10 +1,8 @@
-/* Ensure that the path to your background image is correct */
 .background-section {
-    background-image:  url("/static/imgs/mmu.jpeg");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    height: 50vh; /* Adjust based on your desired height */
+    height: 25vh; /* Adjust height to cover full viewport */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -14,8 +12,14 @@
 }
 
 .overlay-content {
-    background: rgba(0, 0, 0, 0.8); /* Optional: add a semi-transparent background for better readability */
     padding: 20px;
+    border-radius: 20px;
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
+}
+
+.overlay-content h2, .overlay-content p {
+    margin: 0;
+    padding: 10px;
 }
 
 .additional-content {
@@ -51,4 +55,54 @@
     color: white;
 }
 
+/* Additional CSS for Campus section if needed */
+.campus {
+    padding-top: 100px;
+    width: 80%;
+    margin: auto;
+    text-align: center;
+    padding-top: 50px;
+}
 
+.campus-col {
+    border-radius: 10px;
+    margin-bottom: 30px;
+    position: relative;
+    overflow: hidden;
+    flex-basis: 49%;
+}
+
+.campus-col img {
+    width: 100%;
+    display: block;
+}
+
+.layer {
+    background: transparent;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: 0.5s;
+}
+
+.layer:hover {
+    background-color: rgba(182, 181, 181, 0.7);
+}
+
+.layer h3 {
+    width: 100%;
+    font-weight: 500;
+    color: #fff;
+    font-size: 26px;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    position: absolute;
+}
+
+.layer:hover h3 {
+    bottom: 49px;
+    opacity: 1;
+}

@@ -8,23 +8,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{% static 'css/homepagestyle.css' %}">
 </head>
-    <!-- Main content area -->
-    <div class="content-wrapper">
-        <!-- New section for background image -->
-        <section class="background-section">
-            <div class="overlay-content">
-                <!-- Add any content you want to display over the background image -->
-                <h2>Welcome To Our Campus</h2>
-                <p>The best community that dedicated to student success for undergraduate, graduate and doctoral</p>
-            </div>
-        </section>   
-        <div class="additional-content">
-            <h1>START YOUR JOURNEY HERE</h1>
-            <p>where the best started here</p>
-            <a href="{% url 'facilities' %}" class="reserve-button">Reserve your Facility</a>
+<!-- Main content area -->
+<div class="content-wrapper">
+    <!-- New section for background image -->
+    <section class="background-section">
+        <div class="overlay-content">
+            <!-- Add any content you want to display over the background image -->
+            <h2>Welcome To Our Campus Reservation system</h2>
+            <p>The best community that dedicated to student success for undergraduate, graduate and doctoral</p>
         </div>
+    </section>
+    <section class="campus" data-aos="fade-up">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6" data-aos="fade-right">
+                    <div class="campus-col">
+                        <img src="{% static 'imgs/13.webp' %}" class="img-fluid" alt="Cyberjaya Campus">
+                        <div class="layer">
+                            <h3>Cyberjaya</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6" data-aos="fade-left">
+                    <div class="campus-col">
+                        <img src="{% static 'imgs/melaka.webp' %}" class="img-fluid" alt="Melaka Campus">
+                        <div class="layer">
+                            <h3>Melaka</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="additional-content">
+        <h1>START YOUR JOURNEY HERE</h1>
+        <p>Where the best started here</p>
+        <a href="{% url 'facilities' %}" class="reserve-button">Reserve your Facility</a>
     </div>
+</div>
+
 {% endblock %}
 
-{% block extracss %}
-{% endblock %}

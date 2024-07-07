@@ -5,7 +5,8 @@
 }
 
 .reviews-item {
-    width: 800px;
+    width: 100%; /* Full width by default */
+    max-width: 1000px; /* Increased maximum width for wider review boxes */
     border: 1px solid #ccc;
     border-radius: 5px;
     padding: 15px;
@@ -22,31 +23,71 @@
 
 .review-id {
     font-weight: bold;
-    min-width: 100px; 
+    min-width: 100px; /* Minimum width for ID field */
     display: flex;
     align-self: flex-start;
 }
 
 .facility {
-    flex: 1; 
+    flex: 1; /* Flexible width for facility name */
     margin-right: 10px;
 }
 
 .stars {
-    color: #ffffff;
+    color: #ffffff; /* Star icons color */
 }
 
 .stars .fa-star {
-    font-size: 16px;
+    font-size: 16px; /* Star icon size */
 }
 
 .review-comment {
     margin-top: 10px;
     display: flex;
     align-items: flex-start;
-
 }
 
 .fa-star.checked {
-    color: #ffd700; 
+    color: #ffd700; /* Checked star color */
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 1200px) {
+    .reviews-item {
+        max-width: 800px; /* Adjust max-width for medium screens */
+    }
+}
+
+@media (max-width: 992px) {
+    .reviews-item {
+        max-width: 600px; /* Adjust max-width for smaller screens */
+    }
+}
+
+@media (max-width: 768px) {
+    .reviews-item {
+        max-width: 500px; /* Further reduce max-width for tablets */
+        padding: 10px; /* Adjust padding for smaller screens */
+    }
+}
+
+@media (max-width: 576px) {
+    .reviews-item {
+        max-width: 100%; /* Full width on mobile devices */
+        padding: 10px; /* Adjust padding for smaller screens */
+    }
+
+    .review-id {
+        min-width: auto; /* Reset minimum width for ID field */
+    }
+
+    .stars .fa-star {
+        font-size: 14px; /* Adjust star icon size for smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .reviews-item {
+        padding: 8px; /* Further adjust padding for smaller screens */
+    }
 }
